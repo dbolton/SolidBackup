@@ -3,6 +3,7 @@
 - Automatic updates
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
+- Finish documentaion for building and running
 
 KNOWN ISSUES
 - ShadowSpawn fails when robocopy uses a /log argument that includes quotes https://github.com/candera/shadowspawn/issues/20
