@@ -1,0 +1,13 @@
+#ignore build, dist, and node-modules directories
+build/
+dist/
+node_modules/
+
+#ignore any other build/dist related files
+package-lock.json
+yarn.lock
+yarn-error.log
+
+#ignore any shortcuts (created locally for convienience)
+*.lnk
+

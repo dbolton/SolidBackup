@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang='en-US' dir='ltr'>
+<head>
+<meta charset='utf-8'>
+<title>BoltBackup</title>
+<!--<script src='http://code.jquery.com/jquery-2.1.1.js'></script>-->
+
+<link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+<div id="container">
+<h1><img src="build/wordmark.png" alt="BoltBackup"></h1>
+<!--<h2>Secure your data</h2>-->
+
+<div id="general_message" class="general_message"></div>
+
+<div id="settings_section" class="active">
+<!--<h2>Settings</h2>-->
+<form id="backup-form">
+<ol>
+
+<li>
+<h3 title="Which folder would you like to back up?">Source folder</h3>
+<p style="display:none"><em>Which folder would you like to back up?</em></p>
+<input type="text" id="source_folder" size="60" value=""> <!--value="C:\USERNAME" >-->
+<button id="source_folder_browse" type="button" class="browse">Browse...</button><br>
+<div id="source_folder_message" class="message"></div>
+</li>
+
+<li>
+<h3 title="Where would you like to save your back up?">Destination folder</h3>
+<p style="display:none"><em>Where would you like to save your back up?</em></p>
+<input type="text" id="destination_folder" size="60" value=""> <!--value="M:\Users\USERNAME\backup">-->
+<button id="destination_folder_browse" type="button" class="browse">Browse...</button><br>
+<div id="destination_folder_message" class="message"></div>
+</li>
+
+<li>
+<h3 title="How much would you like to backup each time?">Type</h3>
+<ul class="radio">
+<li title="Complete but slow. Any history takes up lots of disk space."><p><label><input type="radio" name="backup_type" id="full" value="full" checked="checked"> <strong>Full</strong>: Make a complete backup every time.</label></p>
+	<div class="full"><ul>
+	<li><input type="number" id="number_of_full" value="3" min="1" max="99"> Number of full backups to keep <div id="number_of_full_message" class="message"></div></li>
+</ul></div></li>
+
+<li title="Fast after the initial backups. Any history takes up lots of disk space. Warning: If a file is deleted on your computer, it gets deleted from the mirror at the next backup. Therefore rotating through multiple mirrors is recommended."><p><label><input type="radio" name="backup_type" id="mirror" value="mirror"> <strong>Mirror</strong>: Update backup to match source</label></p>
+	<div class="mirror"><ul>
+	<li><input type="number" id="number_of_mirror" value="3" min="1" max="99"> Number of mirror backups to rotate through <div id="number_of_mirror_message" class="message"></div></li>
+</ul></div></li>
+
+<li style="display:none"><p><label><input type="radio" name="backup_type" id="automatic" value="automatic" disabled> [Not implemented yet]<br> <strong>Automatic</strong>: Make multiple backups based on available space (recommended when you have plenty of storage space for backups, like an external hard disk dedicated to backups). Keeps daily backups for the last two weeks (incremental backups), weekly backups for the last two months (differential backups), and monthly backups (full backups) as space permits. When hitting space limits, oldest backups get deleted first.</label></p></li>
+
+<li style="display:none"><p><label><input type="radio" name="backup_type" id="differential" value="differential" disabled> [Not implemented yet]<br> <strong>Differential</strong>: Make a full backup the first time. Subsequent backups copy only the files that changed since the last full backup. Differential backups run faster than full backups if you have many files that do not change between backups.</label></p>
+	<div class="differential"><ul>
+		<li><label><input type="number" id="number_of_full_diff" value="1" min="1" max="99" disabled> Full backups to keep</label><div id="number_of_full_diff_message" class="message"></div></li>
+		<li><label><input type="number" id="number_of_differential" value="10" min="1" max="99" disabled> Differential backups to keep</label><div id="number_of_differential_message" class="message"></div></li>
+		<li>Would you like to keep all the differentials between each full backup?
+			<ul class="radio">
+				<li><label><input type="radio" name="keep_differentials" id="keep_all_differentials" checked="checked" disabled> <strong>Keep all differentials</strong> until the corresponding full backup expires.</label> (Takes more disk space, but gives you more options if you need to recover a file from a specific date.)</li>
+				<li><label><input type="radio" name="keep_differentials" id="keep_latest_differential" disabled> <strong>Keep only the most recent differential.</strong></label> (Takes less disk space, but gives you fewer options when recovering files.)</li>
+			</ul></li>
+	</ul></div></li>
+
+</ul></li>
+
+
+<li id="schedule-li" class="collapsible">
+<h3 title="Would you like to backup every day, week, or month?">Schedule</h3>
+<div id="schedule-summary" class="summary"></div>
+<div id="schedule-div" class="collapsed">
+<p><em style="display:none">Would you like to backup every day, week, or month?</em> Pick a schedule when your computer is likely to be powered on and connected to your destination folder. Note: during backups, other programs on your computer may run slower.</p>
+
+<label><strong>Start at:</strong> <input type="time" id="start_time"></label><div id="start_time_message" class="message"></div>
+
+<ul class="radio">
+<li><p><label><input type="radio" name="schedule" id="no_schedule" value="no_schedule" checked="checked"> <strong>No schedule</strong></label></p></li>
+
+<li><p><label><input type="radio" name="schedule" id="daily" value="DAILY"> <strong>Daily</strong></label></p></li>
+
+<li><p><label><input type="radio" name="schedule" id="weekly" value="WEEKLY"> <strong>Weekly</strong></label></p>
+	<div id="weekly_days" class="weekly"><ul>
+	<li><label><input type="checkbox" id="monday" class="weekly_day"> Monday</label> </li>
+	<li><label><input type="checkbox" id="tuesday" class="weekly_day"> Tuesday</label> </li>
+	<li><label><input type="checkbox" id="wednesday" class="weekly_day"> Wednesday</label> </li>
+	<li><label><input type="checkbox" id="thursday" class="weekly_day"> Thursday</label> </li>
+	<li><label><input type="checkbox" id="friday" class="weekly_day"> Friday</label> </li>
+	<li><label><input type="checkbox" id="saturday" class="weekly_day"> Saturday</label> </li>
+	<li><label><input type="checkbox" id="sunday" class="weekly_day"> Sunday</label> </li>
+</ul></div><div id="weekly_days_message" class="message"></div></li>
+
+<li><p><label><input type="radio" name="schedule" id="monthly" value="MONTHLY"> <strong>Monthly</strong></label>
+<span id="monthly_days" class="monthly"><label>on the following date: <select id="monthly_select">
+	<option value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+	<option value="5">5</option>
+	<option value="6">6</option>
+	<option value="7">7</option>
+	<option value="8">8</option>
+	<option value="9">9</option>
+	<option value="10">10</option>
+	<option value="11">11</option>
+	<option value="12">12</option>
+	<option value="13">13</option>
+	<option value="14">14</option>
+	<option value="15">15</option>
+	<option value="16">16</option>
+	<option value="17">17</option>
+	<option value="18">18</option>
+	<option value="19">19</option>
+	<option value="20">20</option>
+	<option value="21">21</option>
+	<option value="22">22</option>
+	<option value="23">23</option>
+	<option value="24">24</option>
+	<option value="25">25</option>
+	<option value="26">26</option>
+	<option value="27">27</option>
+	<option value="28">28</option>
+	<option value="29">29</option>
+	<option value="30">30</option>
+	<option value="31">31</option>
+	<option value="LAST">Last</option>
+</select></label></span>
+<div id="monthly_days_message" class="message"></div></li>
+
+<!--<li style="display:none"><label><input type="checkbox" id="background" checked="checked"> Open window in the background for scheduled backups</label></li>-->
+</ul></div></li>
+
+<li id="advanced-li" class="collapsible">
+<h3 title="Would you like exclude any files or folders from backup?">Advanced</h3>
+<div id="advanced-summary" class="summary"></div>
+<div id="advanced-div" class="collapsed"><!--add  class="collapsed"-->
+
+<ul>
+<li><h4 title="Which files or folders would you like to exclude from back up?">Exclude file or folder</h4>
+<div id="exclusions">
+<!--<div id="exclusion_div_0" class="file"><input type="text" id="exclude_0" class="file" size="50" value="">
+<button id="exclude_0_delete" type="button" class="delete" title="Delete">x</button>
+<div id="exclude_0_message" class="message"></div></div>-->
+</div>
+<button style="display:none" id="exclude_file_add" type="button" class="x-small" disabled>Add File (not yet implemented)</button>
+<button id="exclude_folder_add" type="button" class="x-small">Add Folder</button>
+</li>
+
+
+
+<li style="display:none"><label><input type="checkbox" id="ready"></label></li><!--Get's checked when javascript has finished loading and processing settings-->
+<li style="display:none"><label><input type="checkbox" id="shadow" hidden> Shadow Copy</label> </li>
+</ul>
+
+</div></li>
+
+<li>
+<!--<h3>Finish</h3>-->
+<h3><button id="backup" class="default">Backup</button>
+<button id="save" type="button" disabled>Save Settings</button>
+<button id="check" type="button" style="display:none">Check</button></h3>
+</li>
+
+</ol>
+
+</form>
+</div>
+
+<div id="progress_section" class="inactive">
+<!--<h2>Progress</h2>-->
+<h3><strong>Status</strong>: <span id="progress_status" style="font-weight:normal">Ready to start</span></h3>
+
+<p><button id="edit_settings" type="button">Edit Settings</button>
+<button id="open_backup" type="button">Open Destination Folder</button>
+<button id="stop_backup" type="button" style="visibility:hidden">Stop Backup</button></p>
+
+<!--<iframe id="log" src="about:blank" class="active"></iframe>-->
+<pre id="log" class="active"></pre>
+</div>
+
+<script>
+require('./render-process/render.js');
+</script>
+</body>
+</html>

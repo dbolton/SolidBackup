@@ -1,0 +1,32 @@
+{
+  "name": "BoltBackup",
+  "description": "Secure your data with BoltBackup.",
+  "version": "0.2.0",
+  "author": "David Bolton",
+  "main": "main.js",
+  "build": {
+    "appId": "info.davidbolton.boltbackup",
+    "files": [
+      "index.html",
+      "main.js",
+      "main-process/",
+      "render-process/",
+      "style/",
+      "build/wordmark.png"
+    ],
+    "extraFiles": ["Binaries/"],
+    "win": {
+      "requestedExecutionLevel": "highestAvailable"
+    }
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "dev": "./node_modules/.bin/electron . /dev",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^1.7.5",
+    "electron-builder": "^19.27.3"
+  }
+}
