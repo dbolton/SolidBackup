@@ -8,8 +8,8 @@ BUILD ENVIRONMENT
 6. Start BoltBackup by using the script: "npm start" (Alternatively you can manually type: ".\node_modules\.bin\electron").
 
 DISTRIBUTING
-See https://electron.atom.io/docs/tutorial/application-distribution/
-https://github.com/electron-userland/electron-builder/
+
+See "https://electron.atom.io/docs/tutorial/application-distribution/" and "https://github.com/electron-userland/electron-builder/"
 
 1. Download and install yarn from "https://yarnpkg.com/en/docs/install#windows-tab"
 2. Open a new command prompt and navigate to the BoltBackup directory
@@ -17,7 +17,8 @@ https://github.com/electron-userland/electron-builder/
 4. Create the installer by typing: "yarn dist"
 
 DISTRIBUTING UPDATES
-See https://www.electron.build/auto-update
+
+See "https://www.electron.build/auto-update"
 
 1. If this is your first time, install electron-updater as a dependency: change the directory to your clone of the BoltBackup project folder and type: "yarn add electron-updater". 
 
