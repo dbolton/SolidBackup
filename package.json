@@ -14,7 +14,9 @@
       "style/",
       "build/wordmark.png"
     ],
-    "extraFiles": ["Binaries/"],
+    "extraFiles": [
+      "Binaries/"
+    ],
     "win": {
       "requestedExecutionLevel": "highestAvailable"
     }
@@ -28,5 +30,8 @@
   "devDependencies": {
     "electron": "^1.7.5",
     "electron-builder": "^19.27.3"
+  },
+  "dependencies": {
+    "electron-updater": "^3.0.3"
   }
 }

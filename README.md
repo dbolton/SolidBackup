@@ -16,3 +16,10 @@ https://github.com/electron-userland/electron-builder
 3. Type: yarn add electron-builder --dev
 4. Create the installer by typing: yarn dist
 
+DISTRIBUTING UPDATES
+See https://www.electron.build/auto-update
+
+1. If this is your first time, install electron-updater as a dependency: CD to your copy of the BoltBackup project folder and type: yarn add electron-updater
+2. 
+
+

@@ -10,7 +10,6 @@ KNOWN ISSUES
 
 COMPLETED (for next release)
 
-0.2.0
 - Support for mirror backup type
 - Exclude specific folders from backup
 - Option to start in dev mode that shows the Developer Tools and resizes the window to accomodate (simplifies development)
