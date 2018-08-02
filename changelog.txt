@@ -1,6 +1,6 @@
 ﻿TO DO
 
-- Automatic updates
+- Fully test automatic updates
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
 - Finish documentaion for building and running
@@ -11,6 +11,10 @@ KNOWN ISSUES
 
 COMPLETED (for next release)
 
+0.3.0
+- Experimental support for automatic updates
+
+0.2.0
 - Support for mirror backup type
 - Exclude specific folders from backup
 - Option to start in dev mode that shows the Developer Tools and resizes the window to accomodate (simplifies development)

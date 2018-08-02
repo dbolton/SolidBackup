@@ -16,6 +16,9 @@ function killBackup() {
 	console.log('killed');
 }
 
+const {autoUpdater} = require("electron-updater");
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
@@ -315,7 +318,7 @@ function createWindow () {
 			visible: false,
 			key: 'checkForUpdate',
 			click: function () {
-				require('electron').autoUpdater.checkForUpdates()
+				require('electron').autoUpdater.checkForUpdates();
 			}
 		}, {
 			label: 'Restart and Install Update',
@@ -403,6 +406,10 @@ function createWindow () {
 //app.on('ready', function () {
 	const menu = Menu.buildFromTemplate(template);
 	Menu.setApplicationMenu(menu);
+	
+	app.on('ready', function() {
+		autoUpdater.checkForUpdatesAndNotify();
+	});
 //})
 	
 	app.on('browser-window-created', function () {
@@ -498,6 +505,34 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+
+///update logging
+function sendStatusToWindow(text) {
+  console.log(text);
+}
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  sendStatusToWindow('Update downloaded');
+});
+
 
 app.on('will-quit', function () {
 	globalShortcut.unregisterAll()

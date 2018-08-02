@@ -1,7 +1,8 @@
 {
   "name": "BoltBackup",
   "description": "Secure your data with BoltBackup.",
-  "version": "0.2.0",
+  "version": "0.3.0",
+  "license": "LICENSE",
   "author": "David Bolton",
   "main": "main.js",
   "build": {
@@ -25,7 +26,8 @@
     "start": "./node_modules/.bin/electron .",
     "dev": "./node_modules/.bin/electron . /dev",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "publish": "build -p always"
   },
   "devDependencies": {
     "electron": "^1.7.5",
