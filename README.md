@@ -5,7 +5,7 @@
    * Open your preferred frontend.
 	 * Navigate to the folder where you want the code to be on your computer. (Having a dedicated source code directory is recommended)
 	 * Type: `git clone https://github.com/dbolton/BoltBackup.git` (This will create a folder named "BoltBackup" that contains the entire repository)
-	 (You can also use Git GUI to clone the BoltBackup repository)
+	 * (You can also use Git GUI to clone the BoltBackup repository)
 2. Download and install [Node.JS](https://nodejs.org/).
 3. After installing Node.JS you need to install [Electron](https://electron.atom.io/) for UI. Open the command prompt, navigate to the folder of your clone of the BoltBackup repository and type: `npm install electron`
 4. Download [ShadowSpawn](https://github.com/candera/shadowspawn/downloads) and place both the x64 and x86 versions of ShadowSpawn in the Binaries directory.
