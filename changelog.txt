@@ -3,11 +3,15 @@
 - Fully test automatic updates
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
-- Finish documentaion for building and running
+- Finish documentation for building and running
 
 KNOWN ISSUES
 - ShadowSpawn fails when robocopy uses a /log argument that includes quotes https://github.com/candera/shadowspawn/issues/20
 - ShadowSpawn fails if you happen to be installing software when the backup tries to start.
+
+Upstream (Non-release) fixes
+- Fixed spelling error in changelog
+- Updated urls and added elaborative notes for instructions in README.md (Notes are parenthetical, like this)
 
 COMPLETED (for next release)
 
