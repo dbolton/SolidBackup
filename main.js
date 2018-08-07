@@ -1,3 +1,4 @@
+/*
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
@@ -292,12 +293,12 @@ function createWindow () {
 					electron.dialog.showMessageBox(focusedWindow, options, function () {})
 				}
 			}
-		}/*, {
+		}, {
 			label: 'Visit website',
 			click: function () {
-				electron.shell.openExternal('http://davidbolton.info')
+				electron.shell.openExternal('https://github.com/dbolton/BoltBackup')
 			}
-		}*/]
+		}]
 	}]
 	
 	function addUpdateMenuItems (items, position) {
@@ -417,10 +418,10 @@ function createWindow () {
 		if (reopenMenuItem) reopenMenuItem.enabled = true;
 	})
 	
-	/*
-	PROCESS COMMAND LINE ARGUMENTS 
-	E.g. You can run a backup from the Window Scheduler using the command: BoltBackup.exe /run
-	*/
+	//
+	//PROCESS COMMAND LINE ARGUMENTS 
+	//E.g. You can run a backup from the Window Scheduler using the command: BoltBackup.exe /run
+	//
 	let command_line_arg = process.argv;
 	//win.webContents.on('dom-ready', function() { win.webContents.send('path-error', 'general', 'Command Line Arguments: '+command_line_arg+'; length: '+command_line_arg.length); } );
 	
@@ -453,9 +454,9 @@ function createWindow () {
 		console.log('win.show()');
 	}
 	
-	/*
-	Check whether BoltBackup is running as an administrator (only needed if a user overrides the "run as administrator" setting on the exe file)
-	*/
+	//
+	//Check whether BoltBackup is running as an administrator (only needed if a user overrides the "run as administrator" setting on the exe file)
+	//
 	var exec = require('child_process').exec; 
 	exec('NET SESSION', function(err,so,se) {
 		if (se.length === 0) {
@@ -484,12 +485,6 @@ function createWindow () {
 						shell: true, 
 						detached: true
 					});
-					/* 		if (err) {
-									console.log(err);
-							}
-							console.debug("STDOUT :", stdout);
-							console.warn("STDERR : ", stderr);
-					}); */
 				}
 			}) });
 		}
@@ -529,16 +524,16 @@ app.on('activate', () => {
 // code. You can also put them in separate files and require them here.
 
 
-/* 
-IMPORT JS
-*/
+//
+//IMPORT JS
+//
 require('./main-process/chk-backup.js');
 
 
 
-/*
-SAVE SETTINGS
-*/
+//
+//SAVE SETTINGS
+//
 ipc.on('save-settings',saveSettings); 
 function saveSettings(msg, arg) {
 	var fs=require('fs');
@@ -566,11 +561,11 @@ function saveSettings(msg, arg) {
 	var schedule_command = 'schtasks /Create /TN BoltBackup /TR "\'' + path_to_BoltBackup_exe + '\' /run" /RL HIGHEST /F';
 	
 	//Description for boltbackup task: Runs your scheduled backups. If this task is disable or removed, BoltBackup will be unable to run your scheduled backup.
-	/*
-	SCHEDULE TASK COMMAND
-	/RL HIGHEST gives administrative privileges
-	/F forcefully creates the task and suppresses warnings if the task already exists
-	*/
+	//
+	//SCHEDULE TASK COMMAND
+	// /RL HIGHEST gives administrative privileges
+	// /F forcefully creates the task and suppresses warnings if the task already exists
+	//
 	
 	if (arg['no_schedule']) {
 		//schedule_command = 'schtasks /Delete /TN BoltBackup /F';
@@ -633,9 +628,9 @@ function saveSettings(msg, arg) {
 }
 
 
-/*
-OPEN SETTINGS
-*/
+//
+//OPEN SETTINGS
+//
 ipc.on('open-settings',openSettings);
 function openSettings(msg, arg) {
 	var fs=require('fs');
@@ -660,8 +655,9 @@ function openSettings(msg, arg) {
 		}
 	});
 }
+*/
 
-
+const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
@@ -715,6 +711,7 @@ if (process.platform === 'darwin') {
 let win2;
 
 function sendStatusToWindow(text) {
+  console.log(text);
   log.info(text);
   win2.webContents.send('message', text);
 }
@@ -750,8 +747,8 @@ autoUpdater.on('update-downloaded', (info) => {
 });
 app.on('ready', function() {
   // Create the Menu
-  const menu = electron.Menu.buildFromTemplate(template);
-  electron.Menu.setApplicationMenu(menu);
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   createDefaultWindow();
 });
