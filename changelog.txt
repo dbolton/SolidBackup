@@ -1,6 +1,5 @@
 ﻿TO DO
 
-- Fully test automatic updates
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
 - Finish documentation for building and running
@@ -16,7 +15,8 @@ Upstream (Non-release) fixes
 COMPLETED (for next release)
 
 0.3.0
-- Experimental support for automatic updates
+- Support for automatic updates
+- Self-sign builds
 
 0.2.0
 - Support for mirror backup type

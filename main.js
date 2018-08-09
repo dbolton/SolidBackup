@@ -307,25 +307,6 @@ function createWindow () {
 		let updateItems = [{
 			label: `Version ${version}`,
 			enabled: false
-		}, {
-			label: 'Checking for Update',
-			enabled: false,
-			key: 'checkingForUpdate'
-		}, {
-			label: 'Check for Update',
-			visible: false,
-			key: 'checkForUpdate',
-			click: function () {
-				require('electron-updater').autoUpdater.checkForUpdates();
-			}
-		}, {
-			label: 'Restart and Install Update',
-			enabled: true,
-			visible: false,
-			key: 'restartToUpdate',
-			click: function () {
-				require('electron-updater').autoUpdater.quitAndInstall()
-			}
 		}]
 		
 		items.splice.apply(items, [position, 0].concat(updateItems))
@@ -408,6 +389,7 @@ function createWindow () {
 	//get updates
 	const { autoUpdater } = require('electron-updater');
 	autoUpdater.checkForUpdatesAndNotify();
+	
 	const log = require('electron-log');
 	autoUpdater.logger = log;
 	autoUpdater.logger.transports.file.level = 'info';
@@ -415,17 +397,8 @@ function createWindow () {
 	
 	function sendStatusToWindow(text) {
 		log.info(text);
-		//win.webContents.send('message', text);
 	}
-	// function createDefaultWindow() {
-		// win = new BrowserWindow();
-		// win.webContents.openDevTools();
-		// win.on('closed', () => {
-			// win = null;
-		// });
-		// win.loadURL(`file://${__dirname}/version.html#v${app.getVersion()}`);
-		// return win;
-	// }
+	
 	autoUpdater.on('checking-for-update', () => {
 		sendStatusToWindow('Checking for update...');
 	})
@@ -444,19 +417,21 @@ function createWindow () {
 		log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
 		sendStatusToWindow(log_message);
 	})
-	autoUpdater.on('update-downloaded', (info) => {
+	autoUpdater.on('update-downloaded', (info, releaseNotes, releaseName) => {
 		sendStatusToWindow('Update downloaded');
-	});
-	// app.on('ready', function() {
-		// // Create the Menu
-		// const menu = Menu.buildFromTemplate(template);
-		// Menu.setApplicationMenu(menu);
+		
+		const dialogOpts = {
+			type: 'info',
+			buttons: ['Restart', 'Later'],
+			title: 'Application Update',
+			message: process.platform === 'win32' ? releaseNotes : releaseName,
+			detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+		}
 
-		// createDefaultWindow();
-	// });
-	// app.on('window-all-closed', () => {
-		// app.quit();
-	// });
+		dialog.showMessageBox(dialogOpts, (response) => {
+			if (response === 0) autoUpdater.quitAndInstall()
+		})
+	});
 
 //})
 	
