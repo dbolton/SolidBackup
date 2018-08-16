@@ -8,15 +8,11 @@ KNOWN ISSUES
 - ShadowSpawn fails when robocopy uses a /log argument that includes quotes https://github.com/candera/shadowspawn/issues/20
 - ShadowSpawn fails if you happen to be installing software when the backup tries to start.
 
-Upstream (Non-release) fixes
-- Fixed spelling error in changelog
-- Updated urls and added elaborative notes for instructions in README.md (Notes are parenthetical, like this)
-
 COMPLETED (for next release)
 
 0.3.0
 - Support for automatic updates
-- Self-sign builds
+- Installer is self-signed
 
 0.2.0
 - Support for mirror backup type

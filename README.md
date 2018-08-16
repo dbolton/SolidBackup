@@ -1,23 +1,14 @@
-## Build Environment
+## Features
+* **Back up everything you care about.** Choose any folder, including application settings. You can even back up files you currently have open.
+* **Ask once.** Choose a schedule for backups. It's one less worry for you.
+* **Avoid mistakes.** You've probably never tried to back up a folder to itself. I have. After doubling in size many times over, I quickly filled the hard disk with folders so deep Windows couldn't delete the bad backup. Unlike the software I was using at the time, BoltBackup prevents these mistakes.
+* **Free** and open source.
 
-1. Download and install [Git](https://www.git-scm.com/) to manage and retrieve the code.
-2. Clone the BoltBackup code repository
-   1. Open the Command Prompt (or BASH if you prefer)
-   2. Navigate to the folder where you want the code to be on your computer. For example, `cd C:\Users\<username>\Documents\Code`
-   3. Type: `git clone https://github.com/dbolton/BoltBackup.git` (This creates a folder named "BoltBackup" that contains the entire repository.) (Alternatively, you can use the Git GUI to clone the BoltBackup repository.)
-2. Download and install [Node.JS](https://nodejs.org/).
-3. After installing Node.JS you need to install [Electron](https://electron.atom.io/) for UI. Open the command prompt, navigate to the folder of your clone of the BoltBackup repository and type: `npm install electron`
-4. Download [ShadowSpawn](https://github.com/candera/shadowspawn/downloads) and place both the x64 and x86 versions of ShadowSpawn in the Binaries directory.
-5. Open a new command prompt and navigate to the BoltBackup directory (Git CMD will work for this)
-6. Start BoltBackup by using the script: `npm start` (Alternatively you can manually type: `.\node_modules\.bin\electron .`).
+## Download
+1. Go to the [latest release](https://github.com/dbolton/BoltBackup/releases/latest) and choose the file that ends ".exe".
+2. Open the .exe file to install the software.
+3. If you get a message "Windows protected your PC," choose **More info**, then choose **Run anyway**. This message occurs for installers that are not signed. Unfortunately, code signing cost money and this software is not bringing in money.
+4. Choose **Yes** when Microsoft Windows asks "Do you want to allow this app from an unknown publisher to make changes to your device?" BoltBackup needs administrative permissions to access all folders and files (including open files). It also needs administrative permission to set up a schedule.
 
-
-## Distributing
-
-See "https://electronjs.org/docs/tutorial/application-distribution" and "https://github.com/electron-userland/electron-builder/"
-
-1. Download and install [Yarn](https://yarnpkg.com/en/docs/install#windows-tab)
-2. Open a new command prompt and navigate to the BoltBackup directory (Again, Git CMD will work for this)
-3. Type: `yarn add electron-builder --dev`
-4. Create the installer by typing: `yarn dist`
-
+## Contribute
+Do you want to improve BoltBackup? Awesome! Please see [Contributing](https://github.com/dbolton/BoltBackup/blob/master/CONTRIBUTING.md).
