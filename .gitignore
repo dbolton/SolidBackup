@@ -1,5 +1,4 @@
 #ignore build, dist, and node-modules directories
-build/
 dist/
 node_modules/
 

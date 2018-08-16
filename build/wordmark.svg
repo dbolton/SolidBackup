@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="2660"
+   height="512"
+   viewBox="0 0 703.79165 135.46667"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="wordmark.svg"
+   inkscape:export-filename="C:\Users\dbolton\Documents\IT\Backup\BoltBackup\wordmark.png"
+   inkscape:export-xdpi="9.9941778"
+   inkscape:export-ydpi="9.9941778">
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4502">
+      <stop
+         style="stop-color:#343434;stop-opacity:1"
+         offset="0"
+         id="stop4498" />
+      <stop
+         style="stop-color:#cfcfcf;stop-opacity:1"
+         offset="1"
+         id="stop4500" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4502"
+       id="linearGradient4504"
+       x1="114.96674"
+       y1="270.80032"
+       x2="9.0745459"
+       y2="164.90814"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter4546"
+       x="-0.012"
+       width="1.024"
+       y="-0.012"
+       height="1.024">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.53185143"
+         id="feGaussianBlur4548" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4502"
+       id="linearGradient4557"
+       gradientUnits="userSpaceOnUse"
+       x1="114.96674"
+       y1="270.80032"
+       x2="9.0745459"
+       y2="164.90814"
+       gradientTransform="translate(0,497.41692)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4502"
+       id="linearGradient4575"
+       gradientUnits="userSpaceOnUse"
+       x1="114.96674"
+       y1="270.80032"
+       x2="9.0745459"
+       y2="164.90814"
+       gradientTransform="translate(0,317.50014)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4502"
+       id="linearGradient4593"
+       gradientUnits="userSpaceOnUse"
+       x1="114.96674"
+       y1="270.80032"
+       x2="9.0745459"
+       y2="164.90814"
+       gradientTransform="translate(3.3333334e-8,164.04171)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4502"
+       id="linearGradient3804"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(783.1671,164.04171)"
+       x1="114.96674"
+       y1="270.80032"
+       x2="9.0745459"
+       y2="164.90814" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.11313708"
+     inkscape:cx="4810.2659"
+     inkscape:cy="387.6186"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1280"
+     inkscape:window-height="971"
+     inkscape:window-x="1272"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-161.53332)">
+    <path
+       sodipodi:type="star"
+       id="path3686"
+       sodipodi:sides="6"
+       sodipodi:cx="67.73333"
+       sodipodi:cy="229.26665"
+       sodipodi:r1="67.73333"
+       sodipodi:r2="58.658787"
+       sodipodi:arg1="0.52359878"
+       sodipodi:arg2="1.0471976"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 126.39211,263.13331 -58.658781,33.86667 -58.6587836,-33.86667 3e-7,-67.73333 58.6587843,-33.86666 58.65878,33.86666 z"
+       style="fill:url(#linearGradient4504);fill-opacity:1;stroke-width:0.13209303" />
+    <circle
+       style="opacity:0.5;fill:#b3b3b3;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)"
+       id="path4484"
+       cx="67.73333"
+       cy="229.26665"
+       r="53.185143"
+       transform="matrix(0.93434328,0,0,0.93434328,4.4471484,15.052896)" />
+    <text
+       id="text4512"
+       y="-114.67884"
+       x="148.89299"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-size:121.35555267px;stroke-width:0.26458332"
+         y="-114.67884"
+         x="148.89299"
+         id="tspan4510"
+         sodipodi:role="line"><tspan
+           id="tspan4506"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Berlin Sans FB Demi';-inkscape-font-specification:'Berlin Sans FB Demi'">Bolt</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Berlin Sans FB';-inkscape-font-specification:'Berlin Sans FB'"
+           id="tspan4508">Backup</tspan></tspan></text>
+    <text
+       id="text4520"
+       y="-262.84561"
+       x="148.89299"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-size:121.35555267px;stroke-width:0.26458332"
+         y="-262.84561"
+         x="148.89299"
+         id="tspan4518"
+         sodipodi:role="line"><tspan
+           id="tspan4514"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Britannic Bold';-inkscape-font-specification:'Britannic Bold, '">Bolt</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Book Antiqua';-inkscape-font-specification:'Book Antiqua'"
+           id="tspan4516">Backup</tspan></tspan></text>
+    <text
+       id="text4528"
+       y="17.612803"
+       x="148.89299"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-size:121.35555267px;stroke-width:0.26458332"
+         y="17.612803"
+         x="148.89299"
+         id="tspan4526"
+         sodipodi:role="line"><tspan
+           id="tspan4522"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Britannic Bold';-inkscape-font-specification:'Britannic Bold, '">Bolt</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI'"
+           id="tspan4524">Backup</tspan></tspan></text>
+    <text
+       id="text4536"
+       y="123.44611"
+       x="148.89299"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:'Copperplate Gothic Bold';-inkscape-font-specification:'Copperplate Gothic Bold, ';stroke-width:0.26458332"
+         y="123.44611"
+         x="148.89299"
+         id="tspan4534"
+         sodipodi:role="line">Bolt<tspan
+   id="tspan4532"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Copperplate Gothic Light';-inkscape-font-specification:'Copperplate Gothic Light, '">Backup</tspan></tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke-width:0.13209303"
+       d="m 126.39211,935.17654 -58.658781,33.86667 -58.6587836,-33.86667 3e-7,-67.73333 58.6587843,-33.86666 58.65878,33.86666 z"
+       inkscape:randomized="0"
+       inkscape:rounded="0"
+       inkscape:flatsided="true"
+       sodipodi:arg2="1.0471976"
+       sodipodi:arg1="0.52359878"
+       sodipodi:r2="58.658787"
+       sodipodi:r1="67.73333"
+       sodipodi:cy="901.30986"
+       sodipodi:cx="67.73333"
+       sodipodi:sides="6"
+       id="path3705"
+       sodipodi:type="star" />
+    <circle
+       transform="matrix(0.93434328,0,0,0.93434328,4.4471484,687.09493)"
+       r="53.185143"
+       cy="229.26665"
+       cx="67.73333"
+       id="circle3707"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)" />
+    <text
+       id="text3715"
+       y="938.36407"
+       x="148.89299"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.26458332"
+         y="938.36407"
+         x="148.89299"
+         id="tspan3713"
+         sodipodi:role="line">Bolt<tspan
+   id="tspan3711"
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light'">Backup</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6e603c;fill-opacity:1;stroke:none;stroke-width:0.26458332;"
+       x="148.89299"
+       y="266.32126"
+       id="text4581"><tspan
+         sodipodi:role="line"
+         id="tspan4579"
+         x="148.89299"
+         y="266.32126"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.26458332;fill:#6e603c;fill-opacity:1;">Bolt<tspan
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light';fill:#6e603c;fill-opacity:1;"
+   id="tspan4577">Backup</tspan></tspan></text>
+    <path
+       style="fill:url(#linearGradient4557);fill-opacity:1;stroke-width:0.13209303"
+       d="m 126.39211,760.55032 -58.658781,33.86666 -58.6587836,-33.86666 3e-7,-67.73333 58.6587843,-33.86666 58.65878,33.86666 z"
+       inkscape:randomized="0"
+       inkscape:rounded="0"
+       inkscape:flatsided="true"
+       sodipodi:arg2="1.0471976"
+       sodipodi:arg1="0.52359878"
+       sodipodi:r2="58.658787"
+       sodipodi:r1="67.73333"
+       sodipodi:cy="726.68363"
+       sodipodi:cx="67.73333"
+       sodipodi:sides="6"
+       id="path4541"
+       sodipodi:type="star" />
+    <circle
+       transform="matrix(0.93434328,0,0,0.93434328,4.4471484,512.46982)"
+       r="53.185143"
+       cy="229.26665"
+       cx="67.73333"
+       id="circle4543"
+       style="opacity:0.5;fill:#b3b3b3;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="148.89299"
+       y="763.7384"
+       id="text4549"><tspan
+         sodipodi:role="line"
+         id="tspan4547"
+         x="148.89299"
+         y="763.7384"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#000000;fill-opacity:1;stroke-width:0.26458332">Bolt<tspan
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light';fill:#000000;fill-opacity:1"
+   id="tspan4545" /></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6e603c;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="347.85956"
+       y="763.7384"
+       id="text4555"><tspan
+         sodipodi:role="line"
+         id="tspan4553"
+         x="347.85956"
+         y="763.7384"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#6e603c;fill-opacity:1;stroke-width:0.26458332"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light';fill:#6e603c;fill-opacity:1"
+           id="tspan4551">Backup</tspan></tspan></text>
+    <path
+       style="fill:url(#linearGradient4575);fill-opacity:1;stroke-width:0.13209303"
+       d="m 126.39211,580.63296 -58.658781,33.86667 -58.6587836,-33.86667 3e-7,-67.73333 58.6587843,-33.86666 58.65878,33.86666 z"
+       inkscape:randomized="0"
+       inkscape:rounded="0"
+       inkscape:flatsided="true"
+       sodipodi:arg2="1.0471976"
+       sodipodi:arg1="0.52359878"
+       sodipodi:r2="58.658787"
+       sodipodi:r1="67.73333"
+       sodipodi:cy="546.76628"
+       sodipodi:cx="67.73333"
+       sodipodi:sides="6"
+       id="path4559"
+       sodipodi:type="star" />
+    <circle
+       transform="matrix(0.93434328,0,0,0.93434328,4.4471484,332.55304)"
+       r="53.185143"
+       cy="229.26665"
+       cx="67.73333"
+       id="circle4561"
+       style="opacity:0.5;fill:#b3b3b3;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6e603c;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="148.89299"
+       y="583.82104"
+       id="text4567"><tspan
+         sodipodi:role="line"
+         id="tspan4565"
+         x="148.89299"
+         y="583.82104"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#6e603c;fill-opacity:1;stroke-width:0.26458332">Bolt<tspan
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light';fill:#6e603c;fill-opacity:1"
+   id="tspan4563" /></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="347.85956"
+       y="583.82104"
+       id="text4573"><tspan
+         sodipodi:role="line"
+         id="tspan4571"
+         x="347.85956"
+         y="583.82104"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;stroke-width:0.26458332"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light'"
+           id="tspan4569">Backup</tspan></tspan></text>
+    <path
+       style="fill:url(#linearGradient4593);fill-opacity:1;stroke-width:0.13209303"
+       d="m 126.39211,427.17471 -58.658781,33.86666 -58.6587836,-33.86666 3e-7,-67.73333 58.6587843,-33.86667 58.65878,33.86667 z"
+       inkscape:randomized="0"
+       inkscape:rounded="0"
+       inkscape:flatsided="true"
+       sodipodi:arg2="1.0471976"
+       sodipodi:arg1="0.52359878"
+       sodipodi:r2="58.658787"
+       sodipodi:r1="67.73333"
+       sodipodi:cy="393.30804"
+       sodipodi:cx="67.733327"
+       sodipodi:sides="6"
+       id="path4583"
+       sodipodi:type="star" />
+    <circle
+       transform="matrix(0.93434328,0,0,0.93434328,4.4471484,179.09461)"
+       r="53.185143"
+       cy="229.26665"
+       cx="67.73333"
+       id="circle4585"
+       style="opacity:0.5;fill:#b3b3b3;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)" />
+    <text
+       id="text4591"
+       y="430.36261"
+       x="148.89299"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6e603c;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#6e603c;fill-opacity:1;stroke-width:0.26458332"
+         y="430.36261"
+         x="148.89299"
+         id="tspan4589"
+         sodipodi:role="line">Bolt<tspan
+   id="tspan4587"
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light';fill:#6e603c;fill-opacity:1">Backup</tspan></tspan></text>
+    <path
+       sodipodi:type="star"
+       id="path4595"
+       sodipodi:sides="6"
+       sodipodi:cx="67.73333"
+       sodipodi:cy="229.26722"
+       sodipodi:r1="67.73333"
+       sodipodi:r2="58.658787"
+       sodipodi:arg1="0.52359878"
+       sodipodi:arg2="1.0471976"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 126.39211,263.13389 -58.658781,33.86667 -58.6587836,-33.86667 3e-7,-67.73333 58.6587843,-33.86666 58.65878,33.86666 z"
+       style="fill:#6e603c;fill-opacity:1;stroke-width:0.13209303" />
+    <circle
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)"
+       id="circle4597"
+       cx="67.73333"
+       cy="229.26665"
+       r="53.185143"
+       transform="matrix(0.93434328,0,0,0.93434328,4.4471484,15.052891)" />
+    <path
+       sodipodi:type="star"
+       id="path3802"
+       sodipodi:sides="6"
+       sodipodi:cx="850.90084"
+       sodipodi:cy="393.30804"
+       sodipodi:r1="67.73333"
+       sodipodi:r2="58.658787"
+       sodipodi:arg1="0.52359878"
+       sodipodi:arg2="1.0471976"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 909.5596,427.17471 -58.65878,33.86666 -58.65879,-33.86666 0,-67.73333 58.65879,-33.86667 58.65878,33.86667 z"
+       style="fill:url(#linearGradient3804);fill-opacity:1;stroke-width:0.13209303"
+       inkscape:export-xdpi="9.937501"
+       inkscape:export-ydpi="9.937501" />
+    <circle
+       style="opacity:0.5;fill:#b3b3b3;fill-opacity:1;stroke-width:0.25386703;filter:url(#filter4546)"
+       id="circle3781"
+       cx="67.73333"
+       cy="229.26665"
+       r="53.185143"
+       transform="matrix(0.93434328,0,0,0.93434328,787.61425,179.09461)"
+       inkscape:export-xdpi="9.937501"
+       inkscape:export-ydpi="9.937501" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#6e603c;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="932.06091"
+       y="430.36261"
+       id="text3787"
+       inkscape:export-xdpi="9.937501"
+       inkscape:export-ydpi="9.937501"><tspan
+         sodipodi:role="line"
+         id="tspan3785"
+         x="932.06091"
+         y="430.36261"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:121.35555267px;font-family:Calibri;-inkscape-font-specification:Calibri;fill:#6e603c;fill-opacity:1;stroke-width:0.26458332">Solid <tspan
+   style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Light';fill:#6e603c;fill-opacity:1"
+   id="tspan3783">Backup</tspan></tspan></text>
+  </g>
+</svg>

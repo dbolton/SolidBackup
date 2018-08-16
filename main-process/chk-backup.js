@@ -210,9 +210,9 @@ function runBackup(msg, arg) {
 	}
 	console.log('folder_exclusions: ' + folder_exclusions);
 	
-	var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNILOG:%appdata%\\BoltBackup\\log.txt';
-	//var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\BoltBackup\\log.txt'; //works if decoded as UTF-16
-	//var backup_command = 'robocopy "' + source_folder + '" "' + destination_folder + destination_sub_folder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\BoltBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
+	var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNILOG:%appdata%\\SolidBackup\\log.txt';
+	//var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
+	//var backup_command = 'robocopy "' + source_folder + '" "' + destination_folder + destination_sub_folder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
 	/*
 	BACKUP COMMAND
 
@@ -240,7 +240,7 @@ function runBackup(msg, arg) {
 	//ls_backup = spawn('cmd.exe', ['/c', backup_command, source_folder, destination_folder, ["/E","/COPYALL","/FFT","/Z","/XJ","/ETA"]]);
 	ls_backup = spawn(backup_command, [], { shell: true });
 	
-	fs.writeFile(app.getPath('appData') + '\\boltbackup\\log.txt', '', function(err) {
+	fs.writeFile(app.getPath('appData') + '\\solidbackup\\log.txt', '', function(err) {
 		if(err) {
 			console.log('Error writing to log.txt', err);
 		} else {
@@ -315,7 +315,7 @@ function updateBackupLog(reset) {
 	if (reset) {
 		clearInterval(reload_log);
 		setTimeout(function() { //update one last time after clearing the timer.
-			fs.readFile(app.getPath('appData') + '\\boltbackup\\log.txt', function(err, data) {
+			fs.readFile(app.getPath('appData') + '\\solidbackup\\log.txt', function(err, data) {
 				if(err) {
 					console.log('Error reading log.txt', err);
 				} else {
@@ -325,7 +325,7 @@ function updateBackupLog(reset) {
 		}, 4000); 
 	} else {
 		reload_log = setInterval( function () {
-			fs.readFile(app.getPath('appData') + '\\boltbackup\\log.txt', function(err, data) {
+			fs.readFile(app.getPath('appData') + '\\solidbackup\\log.txt', function(err, data) {
 				if(err) {
 					console.log('Error reading log.txt', err);
 				} else {

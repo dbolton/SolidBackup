@@ -30,7 +30,7 @@ if '%errorlevel%' NEQ '0' (
 
 
 
-cd "C:\Users\dbolton\Documents\IT\Backup\BoltBackup"
+cd "C:\Users\dbolton\Documents\IT\Backup\SolidBackup"
 @echo on
 cmd /K "yarn dev"
 

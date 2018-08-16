@@ -215,7 +215,7 @@ ipc.on('update-backup-log-display', function(event, log, when) {
 
 //display notifications
 ipc.on('notification', function (event, msg) {
-	let myNotification = new Notification('BoltBackup', {
+	let myNotification = new Notification('Solid Backup', {
 		body: msg
 	});
 });

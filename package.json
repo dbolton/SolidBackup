@@ -1,12 +1,12 @@
 {
-  "name": "BoltBackup",
-  "description": "Secure your data with BoltBackup.",
-  "version": "0.3.0",
+  "name": "SolidBackup",
+  "description": "File Backup for Windows",
+  "version": "0.4.0",
   "license": "GPL-3.0+",
   "author": "David Bolton",
   "main": "main.js",
   "build": {
-    "appId": "info.davidbolton.boltbackup",
+    "appId": "info.davidbolton.solidbackup",
     "files": [
       "index.html",
       "main.js",
@@ -22,7 +22,7 @@
       {
         "provider": "github",
         "owner": "dbolton",
-        "repo": "BoltBackup"
+        "repo": "SolidBackup"
       }
     ],
     "win": {
@@ -46,6 +46,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dbolton/BoltBackup.git"
+    "url": "https://github.com/dbolton/SolidBackup.git"
   }
 }

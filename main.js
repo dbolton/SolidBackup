@@ -287,7 +287,7 @@ function createWindow () {
 						type: 'info',
 						title: 'About',
 						buttons: ['OK'],
-						message: 'BoltBackup by David Bolton\n\nVersion: ' + electron.app.getVersion()
+						message: 'Solid Backup by David Bolton\n\nVersion: ' + electron.app.getVersion()
 					}
 					electron.dialog.showMessageBox(focusedWindow, options, function () {})
 				}
@@ -295,7 +295,7 @@ function createWindow () {
 		}, {
 			label: 'Visit website',
 			click: function () {
-				electron.shell.openExternal('https://github.com/dbolton/BoltBackup')
+				electron.shell.openExternal('https://github.com/dbolton/SolidBackup')
 			}
 		}]
 	}]
@@ -447,7 +447,7 @@ function createWindow () {
 	
 	//
 	//PROCESS COMMAND LINE ARGUMENTS 
-	//E.g. You can run a backup from the Window Scheduler using the command: BoltBackup.exe /run
+	//E.g. You can run a backup from the Window Scheduler using the command: SolidBackup.exe /run
 	//
 	let command_line_arg = process.argv;
 	//win.webContents.on('dom-ready', function() { win.webContents.send('path-error', 'general', 'Command Line Arguments: '+command_line_arg+'; length: '+command_line_arg.length); } );
@@ -482,33 +482,33 @@ function createWindow () {
 	}
 	
 	//
-	//Check whether BoltBackup is running as an administrator (only needed if a user overrides the "run as administrator" setting on the exe file)
+	//Check whether Solid Backup is running as an administrator (only needed if a user overrides the "run as administrator" setting on the exe file)
 	//
 	var exec = require('child_process').exec; 
 	exec('NET SESSION', function(err,so,se) {
 		if (se.length === 0) {
-			console.log("BoltBackup running as administrator");
+			console.log("Solid Backup running as administrator");
 		} else {
-			console.log("BoltBackup not running as administrator");
+			console.log("Solid Backup not running as administrator");
 			const options = {
 				type: 'question',
-				title: 'BoltBackup Needs to Run as Administrator',
+				title: 'Solid Backup Needs to Run as Administrator',
 				buttons: ['Run as Administrator', 'Cancel'],
-				message: 'BoltBackup needs to run as administrator. Without administrator access, BoltBackup cannot make complete backups or schedule backups.\n\nPlease choose "run as administrator" (below), then choose "yes" a moment later when Windows asks for permission.'
+				message: 'Solid Backup needs to run as administrator. Without administrator access, Solid Backup cannot make complete backups or schedule backups.\n\nPlease choose "run as administrator" (below), then choose "yes" a moment later when Windows asks for permission.'
 			}
 			win.webContents.on('dom-ready', function() { electron.dialog.showMessageBox(win, options, function (response) {
 				if (response == 0) {//User clicked "Run as Administrator"
-					console.log('Restart BoltBackup to run as administrator');
+					console.log('Restart Solid Backup to run as administrator');
 					
 					var spawn = require('child_process').spawn;
-					var exe_name = app.getPath('exe').substring(app.getPath('exe').lastIndexOf('\\')+1,app.getPath('exe').length); //BoltBackup.exe if running released version. electron.exe if running dev version
-					var path_to_BoltBackup_exe = app.getPath('exe');
-					if (path_to_BoltBackup_exe.indexOf('electron.exe') > -1) {
-						path_to_BoltBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\boltbackup\\BoltBackup.exe'; //for testing purposes only
+					var exe_name = app.getPath('exe').substring(app.getPath('exe').lastIndexOf('\\')+1,app.getPath('exe').length); //Solid Backup.exe if running released version. electron.exe if running dev version
+					var path_to_SolidBackup_exe = app.getPath('exe');
+					if (path_to_SolidBackup_exe.indexOf('electron.exe') > -1) {
+						path_to_SolidBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe'; //for testing purposes only
 					}
-					//launch daemon to kill BoltBackup and relauch with elevated privileges. (When running dev. version, kills electron.exe instead of BoltBackup.exe)
-					//var daemon = spawn('taskkill /IM BoltBackup.exe || (taskkill /IM electron.exe && start ElevateBoltBackup.vbs) && start ElevateBoltBackup.vbs', [], { 
-					var daemon = spawn('taskkill /IM ' + exe_name + ' && start Binaries\\ElevateBoltBackup.vbs ' + path_to_BoltBackup_exe, [], { 
+					//launch daemon to kill Solid Backup and relauch with elevated privileges. (When running dev. version, kills electron.exe instead of SolidBackup.exe)
+					//var daemon = spawn('taskkill /IM SolidBackup.exe || (taskkill /IM electron.exe && start ElevateSolidBackup.vbs) && start ElevateSolidBackup.vbs', [], { 
+					var daemon = spawn('taskkill /IM ' + exe_name + ' && start Binaries\\ElevateSolidBackup.vbs ' + path_to_SolidBackup_exe, [], { 
 						shell: true, 
 						detached: true
 					});
@@ -564,9 +564,9 @@ require('./main-process/chk-backup.js');
 ipc.on('save-settings',saveSettings); 
 function saveSettings(msg, arg) {
 	var fs=require('fs');
-	var settings_file = '\\boltbackup\\backup-settings.txt';
+	var settings_file = '\\solidbackup\\backup-settings.txt';
 	if (dev_build) { 
-		settings_file = '\\boltbackup\\backup-settings-dev.txt';
+		settings_file = '\\solidbackup\\backup-settings-dev.txt';
 	}
 	fs.writeFile(app.getPath('appData') + settings_file, JSON.stringify(arg, null, 2), function(err) {
 		if(err) {
@@ -577,17 +577,17 @@ function saveSettings(msg, arg) {
 	});
 	
 	//Save scheduled task
-	//var path_to_BoltBackup_exe = path.resolve('BoltBackup.exe');//current directory is lost if started as a scheduled task
-	var path_to_BoltBackup_exe = app.getPath('exe');
-	if (path_to_BoltBackup_exe.indexOf('electron.exe') > -1) {
-		path_to_BoltBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\boltbackup\\BoltBackup.exe'; //for testing purposes only
+	//var path_to_SolidBackup_exe = path.resolve('SolidBackup.exe');//current directory is lost if started as a scheduled task
+	var path_to_SolidBackup_exe = app.getPath('exe');
+	if (path_to_SolidBackup_exe.indexOf('electron.exe') > -1) {
+		path_to_SolidBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe'; //for testing purposes only
 	}
-	console.log('path_to_BoltBackup_exe:',path_to_BoltBackup_exe);
+	console.log('path_to_SolidBackup_exe:',path_to_SolidBackup_exe);
 	
-	//schtasks /Create /SC DAILY /TN boltbackup /TR "'C:\Users\dbolton\Downloads\BoltBackup-win32-x64\BoltBackup.exe' /run" /ST 11:25 /RL HIGHEST /F
-	var schedule_command = 'schtasks /Create /TN BoltBackup /TR "\'' + path_to_BoltBackup_exe + '\' /run" /RL HIGHEST /F';
+	//schtasks /Create /SC DAILY /TN solidbackup /TR "'C:\Users\dbolton\Downloads\SolidBackup-win32-x64\SolidBackup.exe' /run" /ST 11:25 /RL HIGHEST /F
+	var schedule_command = 'schtasks /Create /TN SolidBackup /TR "\'' + path_to_SolidBackup_exe + '\' /run" /RL HIGHEST /F';
 	
-	//Description for boltbackup task: Runs your scheduled backups. If this task is disable or removed, BoltBackup will be unable to run your scheduled backup.
+	//Description for solidbackup task: Runs your scheduled backups. If this task is disable or removed, SolidBackup will be unable to run your scheduled backup.
 	//
 	//SCHEDULE TASK COMMAND
 	// /RL HIGHEST gives administrative privileges
@@ -595,9 +595,9 @@ function saveSettings(msg, arg) {
 	//
 	
 	if (arg['no_schedule']) {
-		//schedule_command = 'schtasks /Delete /TN BoltBackup /F';
-		//schedule_command = 'schtasks /Query /TN "BoltBackup" 2> nul && schtasks /Delete /TN "BoltBackup" /F >nul' //check if BoltBackup task exists. If it does, delete it.
-		schedule_command = 'schtasks /Query /TN "BoltBackup" 2> nul && (schtasks /Delete /TN "BoltBackup" /F) || (exit /b 0)' //check if BoltBackup task exists. If it does, delete it. If it doesn't, reset error code to 0 to avoid error messages in the GUI
+		//schedule_command = 'schtasks /Delete /TN SolidBackup /F';
+		//schedule_command = 'schtasks /Query /TN "SolidBackup" 2> nul && schtasks /Delete /TN "SolidBackup" /F >nul' //check if SolidBackup task exists. If it does, delete it.
+		schedule_command = 'schtasks /Query /TN "SolidBackup" 2> nul && (schtasks /Delete /TN "SolidBackup" /F) || (exit /b 0)' //check if SolidBackup task exists. If it does, delete it. If it doesn't, reset error code to 0 to avoid error messages in the GUI
 	} else if (arg['daily']) {
 		schedule_command += ' /SC DAILY /ST ' + arg['start_time'];
 	} else if (arg['weekly']) {
@@ -661,9 +661,9 @@ function saveSettings(msg, arg) {
 ipc.on('open-settings',openSettings);
 function openSettings(msg, arg) {
 	var fs=require('fs');
-	var settings_file = '\\boltbackup\\backup-settings.txt';
+	var settings_file = '\\solidbackup\\backup-settings.txt';
 	if (dev_build) {
-		settings_file = '\\boltbackup\\backup-settings-dev.txt';
+		settings_file = '\\solidbackup\\backup-settings-dev.txt';
 	}
 	fs.readFile(app.getPath('appData') + settings_file, 'utf8', function (err, data) {
 		if ((err) && (arg != 'first-run')) {//ignore error if this is the first run (i.e. the settings file hasn't been created yet)

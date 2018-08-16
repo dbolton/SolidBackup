@@ -1,5 +1,5 @@
 ﻿TO DO
-
+- Summarize on first run (no settings file)
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
 - Finish documentation for building and running
@@ -9,6 +9,9 @@ KNOWN ISSUES
 - ShadowSpawn fails if you happen to be installing software when the backup tries to start.
 
 COMPLETED (for next release)
+
+0.4.0
+- Name change to Solid Backup
 
 0.3.0
 - Support for automatic updates
@@ -20,7 +23,7 @@ COMPLETED (for next release)
 - Option to start in dev mode that shows the Developer Tools and resizes the window to accomodate (simplifies development)
 - Backup settings for dev mode are saved to a different file from the stable version
 - Enable save button after changing the source or destination folders via the "Browse" buttons
-- Do not use drive letter that is still in use as a RAM disk. (If BoltBackup is closed during a backup the shadow volumn RAM disk stays around until Windows restarts).
+- Do not use drive letter that is still in use as a RAM disk. (If application is closed during a backup the shadow volumn RAM disk stays around until Windows restarts).
 - Update display of backup log without blinking and significantly reducing CPU usage on large logs
 - Support Unicode filenames in log
 - Remove "ROBOCOPY" from log heading to avoid confusion
