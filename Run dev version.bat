@@ -2,6 +2,7 @@
 
 
 @echo off
+%CURRENTDIR% := %cd%
 
 :: BatchGotAdmin
 :-------------------------------------
@@ -30,7 +31,7 @@ if '%errorlevel%' NEQ '0' (
 
 
 
-cd "C:\Users\dbolton\Documents\IT\Backup\SolidBackup"
+cd %CURRENTDIR%
 @echo on
 cmd /K "yarn dev"
 

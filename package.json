@@ -1,6 +1,6 @@
 {
   "name": "SolidBackup",
-  "description": "File Backup for Windows",
+  "description": "File Backup for Windows. Free and open source.",
   "version": "0.4.0",
   "license": "GPL-3.0+",
   "author": "David Bolton",
@@ -37,12 +37,12 @@
     "publish": "build -p always"
   },
   "devDependencies": {
-    "electron": "^1.7.5",
+    "electron": "^1.8.7",
     "electron-builder": "^19.27.3"
   },
   "dependencies": {
-    "electron-log": "^2.2.16",
-    "electron-updater": "^3.0.3"
+    "electron-log": "^2.2.17",
+    "electron-updater": "^3.1.1"
   },
   "repository": {
     "type": "git",
