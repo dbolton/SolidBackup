@@ -49,7 +49,7 @@ function createWindow () {
 	const Menu = electron.Menu;
 	//const app = electron.app
 	const username = os.userInfo()['username'];
-	
+
 	let template = [{
 		label: '&File',
 		submenu: [{
@@ -57,19 +57,19 @@ function createWindow () {
 			accelerator: 'CmdOrCtrl+B',
 			click: function (item, focusedWindow) {
 				win.webContents.send('get-inputs-and-backup');
-			}			
+			}
 		}, {
 			label: '&Save Settings',
 			accelerator: 'CmdOrCtrl+S',
 			click: function (item, focusedWindow) {
 				win.webContents.send('save-settings');
-			}			
+			}
 		}, {
 			label: '&Check Locations and Settings',
 			accelerator: 'CmdOrCtrl+K',
 			click: function (item, focusedWindow) {
 				win.webContents.send('check');
-			}			
+			}
 		}, {
 			label: 'Presets',
 			submenu: [{
@@ -79,7 +79,8 @@ function createWindow () {
 					win.webContents.send('set-user-input', 'source_folder', 'C:\\Users\\' + username + '\\Documents');
 					win.webContents.send('set-user-input', 'destination_folder', '');
 					win.webContents.send('set-user-input', 'full', '', true);
-					win.webContents.send('set-user-input', 'number_of_full', '1');
+					win.webContents.send('set-user-input', 'number_of_full', '3');
+					win.webContents.send('set-user-input', 'number_of_mirror', '3');
 					var date = new Date(new Date().getTime() + 10*60000); //10 minutes ahead of current time
 					win.webContents.send('set-user-input', 'start_time', (date.getHours()<10?'0':'') + date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes());
 					win.webContents.send('set-user-input', 'weekly', '', true);
@@ -100,8 +101,8 @@ function createWindow () {
 				click: function (item, focusedWindow) {
 					win.webContents.send('set-user-input', 'source_folder', 'C:\\Users\\' + username + '\\Documents\\Outlook Files');
 					win.webContents.send('set-user-input', 'destination_folder', '\\\\hqfs1\\general\\Users\\' + username);
-					win.webContents.send('set-user-input', 'full', '', true);
-					win.webContents.send('set-user-input', 'number_of_full', '1');
+					win.webContents.send('set-user-input', 'mirror', '', true);
+					win.webContents.send('set-user-input', 'number_of_mirror', '1');
 					var date = new Date(new Date().getTime() + 10*60000); //10 minutes ahead of current time
 					win.webContents.send('set-user-input', 'start_time', (date.getHours()<10?'0':'') + date.getHours() + ':' + (date.getMinutes()<10?'0':'') + date.getMinutes());
 					win.webContents.send('set-user-input', 'weekly', '', true);
@@ -190,9 +191,9 @@ function createWindow () {
 			enabled: true,
 			click: function (item, focusedWindow) {
 				win.webContents.send('show-settings');
-				//item.enabled = false; 
-				//Menu.getApplicationMenu().getMenuItemById('show-backup-log').enabled = false; //not sure how to get reference to the menu item. This doesn't work because 'menu' is not defined within the function. 
-				//menu.getMenuItemById('show-backup-log').enabled = true; //not sure how to get reference to the menu item. This doesn't work because 'menu' is not defined within the function. 
+				//item.enabled = false;
+				//Menu.getApplicationMenu().getMenuItemById('show-backup-log').enabled = false; //not sure how to get reference to the menu item. This doesn't work because 'menu' is not defined within the function.
+				//menu.getMenuItemById('show-backup-log').enabled = true; //not sure how to get reference to the menu item. This doesn't work because 'menu' is not defined within the function.
 			}
 		}, {
 			label: 'Show Backup Log',
@@ -299,19 +300,19 @@ function createWindow () {
 			}
 		}]
 	}]
-	
+
 	function addUpdateMenuItems (items, position) {
 		if (process.mas) return
-	
+
 		const version = electron.app.getVersion()
 		let updateItems = [{
 			label: `Version ${version}`,
 			enabled: false
 		}]
-		
+
 		items.splice.apply(items, [position, 0].concat(updateItems))
 	}
-	
+
 	function findReopenMenuItem () {
 		const menu = Menu.getApplicationMenu()
 		if (!menu) return
@@ -328,7 +329,7 @@ function createWindow () {
 		})
 		return reopenMenuItem
 	}
-	
+
 	if (process.platform === 'darwin') {
 		const name = electron.app.getName()
 		template.unshift({
@@ -373,32 +374,32 @@ function createWindow () {
 			label: 'Bring All to Front',
 			role: 'front'
 		})
-	
+
 		addUpdateMenuItems(template[0].submenu, 1);
 	}
-	
+
 	if (process.platform === 'win32') {
 		const helpMenu = template[template.length - 1].submenu;
 		addUpdateMenuItems(helpMenu, 0);
 	}
-	
+
 //app.on('ready', function () {
 	const menu = Menu.buildFromTemplate(template);
 	Menu.setApplicationMenu(menu);
-	
+
 	//get updates
 	const { autoUpdater } = require('electron-updater');
 	autoUpdater.checkForUpdatesAndNotify();
-	
+
 	const log = require('electron-log');
 	autoUpdater.logger = log;
 	autoUpdater.logger.transports.file.level = 'info';
 	log.info('App starting...');
-	
+
 	function sendStatusToWindow(text) {
 		log.info(text);
 	}
-	
+
 	autoUpdater.on('checking-for-update', () => {
 		sendStatusToWindow('Checking for update...');
 	})
@@ -419,7 +420,7 @@ function createWindow () {
 	})
 	autoUpdater.on('update-downloaded', (info, releaseNotes, releaseName) => {
 		sendStatusToWindow('Update downloaded');
-		
+
 		const dialogOpts = {
 			type: 'info',
 			buttons: ['Restart', 'Later'],
@@ -434,34 +435,34 @@ function createWindow () {
 	});
 
 //})
-	
+
 	app.on('browser-window-created', function () {
 		let reopenMenuItem = findReopenMenuItem();
 		if (reopenMenuItem) reopenMenuItem.enabled = false;
 	})
-	
+
 	app.on('window-all-closed', function () {
 		let reopenMenuItem = findReopenMenuItem();
 		if (reopenMenuItem) reopenMenuItem.enabled = true;
 	})
-	
+
 	//
-	//PROCESS COMMAND LINE ARGUMENTS 
+	//PROCESS COMMAND LINE ARGUMENTS
 	//E.g. You can run a backup from the Window Scheduler using the command: SolidBackup.exe /run
 	//
 	let command_line_arg = process.argv;
 	//win.webContents.on('dom-ready', function() { win.webContents.send('path-error', 'general', 'Command Line Arguments: '+command_line_arg+'; length: '+command_line_arg.length); } );
-	
+
 	for (var i = 1; i <  command_line_arg.length; i++) {
 		if (command_line_arg[i] == '/run') { console.log('command_line_arg[' + i + ']: ' + command_line_arg[i]);
 			win.showInactive();//show window but not in foreground (to avoid interrupting user)
 			console.log('win.showInactive()');
 			console.log('win id',);
-			
+
 			//win.webContents.send('get-inputs-and-backup');
-			win.webContents.on('did-finish-load', function() { 
+			win.webContents.on('did-finish-load', function() {
 				//var start = openSettings();
-				win.webContents.send('get-inputs-and-backup'); 
+				win.webContents.send('get-inputs-and-backup');
 			} );
 		} else if (command_line_arg[i] == '/dev') {
 			//show Developer Tools and resize window to accommodate
@@ -480,11 +481,11 @@ function createWindow () {
 		win.show();//show window if not already opened in the background (via the /run command line parameter above)
 		console.log('win.show()');
 	}
-	
+
 	//
 	//Check whether Solid Backup is running as an administrator (only needed if a user overrides the "run as administrator" setting on the exe file)
 	//
-	var exec = require('child_process').exec; 
+	var exec = require('child_process').exec;
 	exec('NET SESSION', function(err,so,se) {
 		if (se.length === 0) {
 			console.log("Solid Backup running as administrator");
@@ -499,7 +500,7 @@ function createWindow () {
 			win.webContents.on('dom-ready', function() { electron.dialog.showMessageBox(win, options, function (response) {
 				if (response == 0) {//User clicked "Run as Administrator"
 					console.log('Restart Solid Backup to run as administrator');
-					
+
 					var spawn = require('child_process').spawn;
 					var exe_name = app.getPath('exe').substring(app.getPath('exe').lastIndexOf('\\')+1,app.getPath('exe').length); //Solid Backup.exe if running released version. electron.exe if running dev version
 					var path_to_SolidBackup_exe = app.getPath('exe');
@@ -507,9 +508,9 @@ function createWindow () {
 						path_to_SolidBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe'; //for testing purposes only
 					}
 					//launch daemon to kill Solid Backup and relauch with elevated privileges. (When running dev. version, kills electron.exe instead of SolidBackup.exe)
-					//var daemon = spawn('taskkill /IM SolidBackup.exe || (taskkill /IM electron.exe && start ElevateSolidBackup.vbs) && start ElevateSolidBackup.vbs', [], { 
-					var daemon = spawn('taskkill /IM ' + exe_name + ' && start Binaries\\ElevateSolidBackup.vbs ' + path_to_SolidBackup_exe, [], { 
-						shell: true, 
+					//var daemon = spawn('taskkill /IM SolidBackup.exe || (taskkill /IM electron.exe && start ElevateSolidBackup.vbs) && start ElevateSolidBackup.vbs', [], {
+					var daemon = spawn('taskkill /IM ' + exe_name + ' && start Binaries\\ElevateSolidBackup.vbs ' + path_to_SolidBackup_exe, [], {
+						shell: true,
 						detached: true
 					});
 				}
@@ -561,11 +562,11 @@ require('./main-process/chk-backup.js');
 //
 //SAVE SETTINGS
 //
-ipc.on('save-settings',saveSettings); 
+ipc.on('save-settings',saveSettings);
 function saveSettings(msg, arg) {
 	var fs=require('fs');
 	var settings_file = '\\solidbackup\\backup-settings.txt';
-	if (dev_build) { 
+	if (dev_build) {
 		settings_file = '\\solidbackup\\backup-settings-dev.txt';
 	}
 	fs.writeFile(app.getPath('appData') + settings_file, JSON.stringify(arg, null, 2), function(err) {
@@ -575,7 +576,7 @@ function saveSettings(msg, arg) {
 			console.log('Backup settings saved to ' + app.getPath('appData') + settings_file);
 		}
 	});
-	
+
 	//Save scheduled task
 	//var path_to_SolidBackup_exe = path.resolve('SolidBackup.exe');//current directory is lost if started as a scheduled task
 	var path_to_SolidBackup_exe = app.getPath('exe');
@@ -583,17 +584,17 @@ function saveSettings(msg, arg) {
 		path_to_SolidBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe'; //for testing purposes only
 	}
 	console.log('path_to_SolidBackup_exe:',path_to_SolidBackup_exe);
-	
+
 	//schtasks /Create /SC DAILY /TN solidbackup /TR "'C:\Users\dbolton\Downloads\SolidBackup-win32-x64\SolidBackup.exe' /run" /ST 11:25 /RL HIGHEST /F
 	var schedule_command = 'schtasks /Create /TN SolidBackup /TR "\'' + path_to_SolidBackup_exe + '\' /run" /RL HIGHEST /F';
-	
+
 	//Description for solidbackup task: Runs your scheduled backups. If this task is disable or removed, SolidBackup will be unable to run your scheduled backup.
 	//
 	//SCHEDULE TASK COMMAND
 	// /RL HIGHEST gives administrative privileges
 	// /F forcefully creates the task and suppresses warnings if the task already exists
 	//
-	
+
 	if (arg['no_schedule']) {
 		//schedule_command = 'schtasks /Delete /TN SolidBackup /F';
 		//schedule_command = 'schtasks /Query /TN "SolidBackup" 2> nul && schtasks /Delete /TN "SolidBackup" /F >nul' //check if SolidBackup task exists. If it does, delete it.
@@ -615,18 +616,18 @@ function saveSettings(msg, arg) {
 		schedule_command += arg['date'];
 		schedule_command += '"';
 	}
-	
+
 	console.log('schedule_command:',schedule_command);
 	var spawn = require('child_process').spawn,
 	ls = spawn(schedule_command, [], { shell: true });
-	
+
 	ls.stdout.on('data', function (data) {
 		console.log('stdout: ' + data);
 	});
 
 	ls.stderr.on('data', function (data) {
 		console.log('stderr: ' + data);
-		
+
 		dialog.showMessageBox({
 			type: 'error',
 			title: 'Scheduled Task Failed',
@@ -637,7 +638,7 @@ function saveSettings(msg, arg) {
 
 	ls.on('exit', function (code) {
 		console.log('child process exited with code ' + code);
-		
+
 		if (code > 0) {
 		//If scheduled task command exists with a non-success code
 			dialog.showMessageBox({
@@ -646,11 +647,11 @@ function saveSettings(msg, arg) {
 				message: 'Unable to save the scheduled task.',
 				buttons: ['OK']
 			});
-			
-		} else { 
-			
+
+		} else {
+
 		}
-	
+
 	});
 }
 
@@ -676,7 +677,7 @@ function openSettings(msg, arg) {
 			electron.dialog.showMessageBox(win, options, function () {});
 			return console.log('Error opening backup-settings.txt:', err);
 		}
-		
+
 		if (!err) {
 			win.webContents.send('open-settings', JSON.parse(data));
 		}
