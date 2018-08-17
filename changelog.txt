@@ -12,6 +12,8 @@ COMPLETED (for next release)
 
 0.4.0
 - Name change to Solid Backup
+- Update presets to include mirror option
+- Show summaries for Schedule and Advanced on first run (before settings file has been saved)
 
 0.3.0
 - Support for automatic updates

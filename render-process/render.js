@@ -47,9 +47,9 @@ exclusion_button.addEventListener('click', function (event) {
 
 ipc.on('selected-exclude-folder', addExclusion);
 function addExclusion(event, path, folder_or_file) {
-	var i = 0; 
+	var i = 0;
 	while (document.getElementById('exclude_' + i)) { i++; } //find how many exclusions already exist
-	
+
 	var div = document.createElement('div');
 	div.id = 'exclusion_div_' + i;
 	div.className = folder_or_file;
@@ -57,10 +57,10 @@ function addExclusion(event, path, folder_or_file) {
 	document.getElementById('exclusions').appendChild(div);
 	document.getElementById('exclude_' + i).value = `${path}`;
 	document.getElementById('exclude_' + i + '_delete').addEventListener('click',deleteExclusion);
-	
-	
+
+
 	if (event) {//enable save if called by an event (do not enable save if this is just the initial loading of a settings file)
-		summarizeAndEnableSave(); 
+		summarizeAndEnableSave();
 		monitorExclusions();
 		check();
 	}
@@ -70,15 +70,15 @@ function deleteExclusion() {
 	var elem = this.parentNode; //DIV container which contains text input, delete button, and error message area
 	var id = elem.id;
 	elem.parentNode.removeChild(elem);
-	
+
 	//renumber id's after deleted item
 	for (var i = Number(id.match(/\d+/)[0]) + 1; document.getElementById('exclude_' + i); i++) {
 		//Get details from old div and delete
-		var path = document.getElementById('exclude_' + i).value; 
+		var path = document.getElementById('exclude_' + i).value;
 		var div_container = document.getElementById('exclusion_div_' + i);
 		var folder_or_file = div_container.className;
 		div_container.parentNode.removeChild(div_container);
-		
+
 		//Create new div with renumbered id
 		addExclusion('',path,folder_or_file);
 	}
@@ -105,7 +105,7 @@ fileManagerBtn.addEventListener('click', function (event) {
 document.getElementById('stop_backup').addEventListener('click', function () {
 	ipc.send('kill-backup');
 	console.log('kill-backup sent');
-	
+
 });
 
 
@@ -125,7 +125,7 @@ advanced_section.getElementsByTagName('h3')[0].addEventListener('click', functio
 });
 
 
-var reload_log; 
+var reload_log;
 
 //Call save settings
 document.getElementById('save').addEventListener('click', function(event) {
@@ -203,11 +203,11 @@ ipc.on('update-backup-log-display', function(event, log, when) {
 			previous_log_length = 334; //skips the ROBOCOPY heading in the log, to avoid user confusion
 		}
 	}
-	
+
 	document.getElementById('log').insertAdjacentHTML('beforeend',new TextDecoder("utf-16").decode(log.subarray(previous_log_length,log.length)));
 	previous_log_length = log.length;
 	document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
-	
+
 	if (when == 'last_time') {
 		previous_log_length = 0;
 	}
@@ -224,14 +224,14 @@ ipc.on('notification', function (event, msg) {
 ipc.on('reset-progress', function (event, msg) {
 	document.getElementById('progress_status').innerHTML = msg;
 	document.getElementById('backup').disabled = false;
-	
+
 	if (msg == "Backup failed.") {
-		setTimeout(function() { document.getElementById('log').innerHTML += '\n\nBackup failed.'},2000); 
+		setTimeout(function() { document.getElementById('log').innerHTML += '\n\nBackup failed.'},2000);
 		//Wait 2 seconds so that the log finishes loading before adding "Backup failed" to bottom of displayed log
 	}
-	
-	
-	
+
+
+
 	//const { remote } = require('electron')
 	//remote.getCurrentWindow().show(); //show window (in case it is running in the background)
 	//console.log('remote.getCurrentWindow().show()');
@@ -250,38 +250,39 @@ ipc.on('get-inputs-and-backup', function () {
 });
 
 //open saved settings
+summarize();
 ipc.send('open-settings','first-run');//get access to file via main.js
 ipc.on('open-settings', function(msg, data) {
 	openSettings(msg, data);
 });
 function openSettings(msg, data) {
 	console.log('settings data:',data);
-	
+
 	//Folder settings
 	document.getElementById('source_folder').value = data['source_folder'];
 	document.getElementById('destination_folder').value = data['destination_folder'];
-	
+
 	//Full backup settings
 	document.getElementById('full').checked = data['full'];
 	document.getElementById('number_of_full').value = data['number_of_full'];
-	
+
 	//Mirror backup settings
 	document.getElementById('mirror').checked = data['mirror'];
 	document.getElementById('number_of_mirror').value = data['number_of_mirror'];
-	
+
 	//Automatic backup settings
 	document.getElementById('automatic').checked = data['automatic'];
-	
+
 	//Differential backup settings
 	document.getElementById('differential').checked = data['differential'];
 	document.getElementById('number_of_full_diff').value = data['number_of_full_diff'];
 	document.getElementById('number_of_differential').value = data['number_of_differential'];
-	
+
 	//Schedule settings
 	document.getElementById('start_time').value = data['start_time'];
 	document.getElementById('no_schedule').checked = data['no_schedule'];
 	document.getElementById('daily').checked = data['daily'];
-	
+
 	//Weekly schedule settings
 	document.getElementById('weekly').checked = data['weekly'];
 	document.getElementById('monday').checked = data['monday'];
@@ -291,15 +292,15 @@ function openSettings(msg, data) {
 	document.getElementById('friday').checked = data['friday'];
 	document.getElementById('saturday').checked = data['saturday'];
 	document.getElementById('sunday').checked = data['sunday'];
-	
+
 	//Monthly schedule settings
 	document.getElementById('monthly').checked = data['monthly'];
 	document.getElementById('monthly_select').value = data['date'];
-	
+
 	//Files or folders to exclude from backup
 	if (data['excludes']) { //if data['excludes'] doesn't exist (i.e. settings file from ver. 0.1.2 or before) then ignore without error
 		var number_of_exclusion_divs = document.getElementById('exclusions').children.length;
-		
+
 		if (data['excludes'].length >= number_of_exclusion_divs) {
 			for (var i=0; i < number_of_exclusion_divs; i++) {//fill in existing exclusion divs
 				document.getElementById('exclude_' + i).className = data['excludes'][i].className;
@@ -319,7 +320,7 @@ function openSettings(msg, data) {
 				elem.parentNode.removeChild(elem);
 			}
 		}
-		
+
 	}
 	monitorExclusions(); //adds change event listening
 
@@ -332,15 +333,15 @@ function summarize() {
 	var date = new Date();
 	date.setHours(hours_minutes[0],hours_minutes[1],0);
 	var time = date.toLocaleTimeString().replace(/(\d+:\d+):00(.*)/,'$1$2'); //time in local format (minus seconds)
-	
+
 	var summary = '';
-	
+
 	if (document.getElementById('no_schedule').checked) {//No schedule
 		summary += 'No schedule';
-		
+
 	} else if (document.getElementById('daily').checked) {//Daily
 		summary += 'Daily at ' + time;
-		
+
 	} else if (document.getElementById('weekly').checked) {//Weekly
 		summary += 'Every ';
 		if (document.getElementById('monday').checked) summary += 'Mon ';
@@ -351,14 +352,14 @@ function summarize() {
 		if (document.getElementById('saturday').checked) summary += 'Sat ';
 		if (document.getElementById('sunday').checked) summary += 'Sun ';
 		summary += 'at ' + time;
-		
+
 	} else if (document.getElementById('monthly').checked) {//Monthly
 		var date = '';
 		switch (document.getElementById('monthly_select').value) { //check it is not null
 			case '':
 				console.log('Error: date is blank');
 				break;
-			case '1': 
+			case '1':
 				date = '1st';
 				break;
 			case '2':
@@ -377,7 +378,7 @@ function summarize() {
 		summary += 'Monthly on the ' + date + ' at ' + time;
 	}
 	document.getElementById('schedule-summary').innerHTML = summary;
-	
+
 	//Summarize Advanced settings
 	var summary = '';
 	var number_of_exclusion_divs = document.getElementById('exclusions').children.length;
@@ -421,36 +422,36 @@ function check(event){
 	ipc.send('check', getAllUserInputs(), false);
 }
 function getAllUserInputs() {
-	
+
 	clearAllErrors();
-	
+
 	var user_input = {
-	
+
 		//Folder settings
-		'source_folder' : document.getElementById('source_folder').value, 
+		'source_folder' : document.getElementById('source_folder').value,
 		'destination_folder' : document.getElementById('destination_folder').value,
-		
+
 		//Full backup settings
 		'full' : document.getElementById('full').checked,
 		'number_of_full' : document.getElementById('number_of_full').value,
-		
+
 		//Mirror backup settings
 		'mirror' : document.getElementById('mirror').checked,
 		'number_of_mirror' : document.getElementById('number_of_mirror').value,
-		
+
 		//Automatic backup settings
 		'automatic' : document.getElementById('automatic').checked,
-		
+
 		//Differential backup settings
 		'differential' : document.getElementById('differential').checked,
 		'number_of_full_diff' : document.getElementById('number_of_full_diff').value,
 		'number_of_differential' : document.getElementById('number_of_differential').value,
-		
+
 		//Schedule settings
 		'start_time' : document.getElementById('start_time').value,
 		'no_schedule' : document.getElementById('no_schedule').checked,
 		'daily' : document.getElementById('daily').checked,
-		
+
 		//Weekly schedule settings
 		'weekly' : document.getElementById('weekly').checked,
 		'monday' : document.getElementById('monday').checked,
@@ -460,31 +461,31 @@ function getAllUserInputs() {
 		'friday' : document.getElementById('friday').checked,
 		'saturday' : document.getElementById('saturday').checked,
 		'sunday' : document.getElementById('sunday').checked,
-		
+
 		//Monthly schedule settings
 		'monthly' : document.getElementById('monthly').checked,
 		'date' : document.getElementById('monthly_select').value,
-		
+
 		//Files or folders to exclude from backup
 		'excludes' : [], //filled in with loop below
-		
+
 		//Type of backup
 		'type' : document.querySelector('input[name="backup_type"]:checked').value,
-		
+
 		//Is the user input valid?
 		'pass' : true
-		
+
 	};
-	
+
 	//Excluded files or folders
-	var i = 0; 
+	var i = 0;
 	while (document.getElementById('exclude_' + i)) {
 		user_input['excludes'].push({
 			className: document.getElementById('exclude_' + i).className,
 			value: document.getElementById('exclude_' + i).value});
 		i++;
 	}
-	
+
 	//Number of backups
 	if (!((user_input['number_of_full'] >= 1) && (user_input['number_of_full'] <= 99) && (Math.round(user_input['number_of_full'],0) == user_input['number_of_full']))) {
 		user_input['pass'] = false;
@@ -501,13 +502,13 @@ function getAllUserInputs() {
 		document.getElementById('number_of_differential_message').innerHTML = 'Error: The number of differential backups must be a whole number between 1 and 99';
 		document.getElementById('number_of_differential').className = 'error';
 	}
-	
+
 	//Schedule settings
 	if ((user_input['start_time'] == '') && !(user_input['no_schedule'])) {
 		user_input['pass'] = false;
 		document.getElementById('start_time_message').innerHTML = 'Error: Please complete the start time, including hours, minutes, and AM/PM';
 		document.getElementById('start_time').className = 'error';
-		
+
 		var collapsible = document.getElementsByClassName('collapsible')[0];
 		collapsible.getElementsByTagName('h3')[0].classList.add('expanded');
 		collapsible.getElementsByTagName('div')[1].classList.add('expanded');
@@ -516,7 +517,7 @@ function getAllUserInputs() {
 		user_input['pass'] = false;
 		document.getElementById('weekly_days_message').innerHTML = 'Error: Please select at least one day for the weekly backup to take place.';
 		document.getElementById('weekly_days').className = 'error';
-		
+
 		var collapsible = document.getElementsByClassName('collapsible')[0];
 		collapsible.getElementsByTagName('h3')[0].classList.add('expanded');
 		collapsible.getElementsByTagName('div')[1].classList.add('expanded');
@@ -525,19 +526,19 @@ function getAllUserInputs() {
 		user_input['pass'] = false;
 		document.getElementById('monthly_days_message').innerHTML = 'Error: Please select a date for the monthly backup to take place.';
 		document.getElementById('monthly_days').className = 'error';
-		
+
 		var collapsible = document.getElementsByClassName('collapsible')[0];
 		collapsible.getElementsByTagName('h3')[0].classList.add('expanded');
 		collapsible.getElementsByTagName('div')[1].classList.add('expanded');
-	} 
-	
+	}
+
 	document.getElementById('ready').checked = true;
-	
+
 	return user_input;
 }
 function clearAllErrors() {
 	var list_of_message_areas = document.getElementsByClassName('message');
-	
+
 	for (var i = 0; i < list_of_message_areas.length; i++) {
 		list_of_message_areas[i].innerHTML = ''; //clear error message
 		document.getElementById(list_of_message_areas[i].id.split('_message')[0]).className = ''; //reset input corresponding input so it no longer appears red
