@@ -7,6 +7,6 @@ package-lock.json
 yarn.lock
 *.log
 
-#ignore any shortcuts (created locally for convienience)
+#ignore any shortcuts and bat files (created locally for convienience)
 *.lnk
-
+*.bat
