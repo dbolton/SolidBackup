@@ -3,6 +3,7 @@
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
 - Finish documentation for building and running
+- Add upstream name change to 0.4.0 release. (This change is already reflected upstream)
 
 KNOWN ISSUES
 - ShadowSpawn fails when robocopy uses a /log argument that includes quotes https://github.com/candera/shadowspawn/issues/20
