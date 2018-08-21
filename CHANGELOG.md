@@ -9,6 +9,9 @@
 
 ## Completed
 
+### 0.4.1
+- Fix logs on Windows 7 so they display with correct encoding. 
+
 ### 0.4.0
 - Change name to Solid Backup
 - Update File > Presets (CofC now uses mirror option)

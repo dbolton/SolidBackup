@@ -2,7 +2,6 @@
 
 
 @echo off
-%CURRENTDIR% := %cd%
 
 :: BatchGotAdmin
 :-------------------------------------
@@ -31,7 +30,7 @@ if '%errorlevel%' NEQ '0' (
 
 
 
-cd %CURRENTDIR%
+cd "%~dp0" REM switch to directory of batch file
 @echo on
 cmd /K "yarn dev"
 
