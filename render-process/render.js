@@ -195,16 +195,22 @@ ipc.on('show-backup-log', function() {
 	document.getElementById('progress_section').className = 'active';
 });
 //update backup log
+var first_char = 334;
+var encoding = "utf-16";
+if (/6\..*/.test(require('os').release())) { //Robocopy on Windows 7 does not do a true Unicode log (it has a bug). UNILOG is actually iso-8859-1 instead of utf-8
+	first_char = 165;
+	encoding = "iso-8859-1";
+}
 var previous_log_length = 0;
 ipc.on('update-backup-log-display', function(event, log, when) {
 	if (previous_log_length == 0) {
 		document.getElementById('log').innerHTML = 'Loading shadow copy.\n\n'; //reset log display if this is the first run
-		if (log.length > 334) {
-			previous_log_length = 334; //skips the ROBOCOPY heading in the log, to avoid user confusion
+		if (log.length > first_char) {
+			previous_log_length = first_char; //skips the ROBOCOPY heading in the log, to avoid user confusion
 		}
 	}
 
-	document.getElementById('log').insertAdjacentHTML('beforeend',new TextDecoder("utf-16").decode(log.subarray(previous_log_length,log.length)));
+	document.getElementById('log').insertAdjacentHTML('beforeend',new TextDecoder(encoding).decode(log.subarray(previous_log_length,log.length)));
 	previous_log_length = log.length;
 	document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
 
