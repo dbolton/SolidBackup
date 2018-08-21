@@ -5,12 +5,15 @@
 
 ## Known issues
 - ShadowSpawn fails when robocopy uses a /log argument that includes quotes https://github.com/candera/shadowspawn/issues/20
+- If ShadowSpawn fails, it holds on to the old drive letter  https://github.com/candera/shadowspawn/issues/22
 - ShadowSpawn fails if you happen to be installing software when the backup tries to start.
 
 ## Completed
+### Next version
+- Improve update message.
 
 ### 0.4.1
-- Fix logs on Windows 7 so they display with correct encoding. 
+- Fix logs on Windows 7 so it displays with the correct encoding.
 
 ### 0.4.0
 - Change name to Solid Backup

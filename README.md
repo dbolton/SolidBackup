@@ -10,5 +10,7 @@
 3. If you get a message "Windows protected your PC," choose **More info**, then choose **Run anyway**. This message occurs for installers that are not signed. Unfortunately, code signing cost money and this software is not bringing in money. (This only occurs when Windows SmartScreen is active in Windows 8 and 10, otherwise you just get the standard administrative permission prompt.)
 4. Choose **Yes** when Microsoft Windows asks "Do you want to allow this app from an unknown publisher to make changes to your device?" Solid Backup needs administrative permissions to access all folders and files (including open files). It also needs administrative permission to set up a schedule.
 
+![Solid Backup offers Full and Mirror type backups with scheduling and folder exclusions](docs/default-settings.png)
+
 ## Contribute
-Do you want to improve Solid Backup? Awesome! Please see [Contributing](https://github.com/dbolton/SolidBackup/blob/master/CONTRIBUTING.md).
+Do you want to improve Solid Backup? Awesome! Please see [Contributing](CONTRIBUTING.md).

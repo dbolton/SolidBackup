@@ -424,9 +424,9 @@ function createWindow () {
 		const dialogOpts = {
 			type: 'info',
 			buttons: ['Restart', 'Later'],
-			title: 'Application Update',
+			title: 'Solid Backup Update',
 			message: process.platform === 'win32' ? releaseNotes : releaseName,
-			detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+			detail: 'A new version of Solid Backup has been downloaded. Restart the application to apply the updates. If you are in the middle of a backup, choose "Later".'
 		}
 
 		dialog.showMessageBox(dialogOpts, (response) => {
