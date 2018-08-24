@@ -1,7 +1,7 @@
 {
   "name": "SolidBackup",
   "description": "File Backup for Windows. Free and open source.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "GPL-3.0+",
   "author": "David Bolton",
   "main": "main.js",
@@ -18,6 +18,9 @@
     "extraFiles": [
       "Binaries/"
     ],
+    "extraMetadata": {
+      "name": "Solid Backup"
+    },
     "publish": [
       {
         "provider": "github",

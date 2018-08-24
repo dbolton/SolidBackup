@@ -10,7 +10,10 @@
 
 ## Completed
 ### Next version
-- Improve update message.
+
+### 0.4.2
+- Improve message when auto-update finishes downloading.
+- Add space to package name "Solid Backup"
 
 ### 0.4.1
 - Fix logs on Windows 7 so it displays with the correct encoding.
