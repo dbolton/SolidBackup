@@ -1,4 +1,4 @@
-## Planned
+## Planned for later releases
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
 - Finish documentation for running
