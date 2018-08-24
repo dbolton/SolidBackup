@@ -27,4 +27,4 @@ See "https://electronjs.org/docs/tutorial/application-distribution" and "https:/
 2. Navigate to the Solid Backup directory
 3. Create the installer by typing: `yarn dist`
 
-Note: If your antivirus programme repeatedly tries to delete the final installer, try running `yarn dist` from command prompt _without_ administrative permission.
+Note: If your antivirus program repeatedly tries to delete the final installer, try running `yarn dist` from command prompt _without_ administrative permission.

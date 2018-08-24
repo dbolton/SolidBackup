@@ -1,7 +1,7 @@
 ## Features
 * **Back up everything you care about.** Choose any folder, including application settings. You can even back up files you currently have open.
 * **Ask once.** Choose a schedule for backups. It's one less worry for you.
-* **Avoid mistakes.** You've probably never tried to back up a folder to itself. I have. After doubling in size many times over, I quickly filled the hard disk with folders so deep Windows couldn't delete the bad backup. Unlike other available programmes, Solid Backup prevents this from occuring.
+* **Avoid mistakes.** You've probably never tried to back up a folder to itself. I have. After doubling in size many times over, I quickly filled the hard disk with folders so deep Windows couldn't delete the bad backup. Unlike other available programs, Solid Backup prevents this from occuring.
 * **Free** and open source. SolidBackup is licensed under the GPL v3.
 
 ## [Download](https://github.com/dbolton/SolidBackup/releases/latest)
@@ -15,4 +15,4 @@
 ## Contribute
 Do you want to improve Solid Backup? Awesome! Please see [Contributing](CONTRIBUTING.md).
 
-Enjoy SolidBackup!
+Enjoy Solid Backup!
