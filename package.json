@@ -1,7 +1,7 @@
 {
   "name": "SolidBackup",
   "description": "File Backup for Windows. Free and open source.",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "license": "GPL-3.0+",
   "author": "David Bolton",
   "main": "main.js",
@@ -27,6 +27,10 @@
     ],
     "win": {
       "requestedExecutionLevel": "highestAvailable"
+    },
+    "nsis": {
+      "shortcutName": "Solid Backup",
+      "artifactName": "Solid Backup Setup ${version}.${ext}"
     }
   },
   "scripts": {

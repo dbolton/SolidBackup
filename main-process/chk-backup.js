@@ -54,7 +54,7 @@ ipc.on('check', checkAllPaths);
 function checkAllPaths(evnt, arg) {//console.log(arg['destination_folder']+" Blank" + arg['destination_folder']=='')
 	const bWindow = require('electron').BrowserWindow;
 	var win = bWindow.getFocusedWindow();
-	
+
 	var pass = true;
 	if (arg['pass'] == false) { //set pass as false if validation already failed on client side
 		pass = false;
@@ -68,9 +68,9 @@ function checkAllPaths(evnt, arg) {//console.log(arg['destination_folder']+" Bla
 		win.webContents.send('path-error', 'destination_folder', 'Error: Please select a folder.');
 		pass = false;
 	}
-	
+
 	if (pass) {
-	
+
 		var source_folder = path.resolve(arg['source_folder']);
 		var destination_folder = path.resolve(arg['destination_folder']);
 
@@ -151,15 +151,15 @@ function getDateTime(now) {
 ipc.on('run-backup', runBackup);
 function runBackup(msg, arg) {
 	msg.preventDefault();
-	
+
 	const bWindow = require('electron').BrowserWindow;
 	//console.log(BrowserWindow.getAllWindows()[0])
 	//var win = bWindow.fromId(0);
 	var win = bWindow.getAllWindows()[0];
-	
+
 	var source_folder = path.resolve(arg['source_folder']);
 	var destination_folder = path.resolve(arg['destination_folder']);
-	
+
 	if (checkAllPaths(msg, arg) == false) {
 		dialog.showMessageBox({
 			type: 'error',
@@ -168,17 +168,17 @@ function runBackup(msg, arg) {
 			buttons: ['OK']
 		});
 		console.log('checkAllPaths: false');
-		
+
 		win.webContents.send('reset-progress', 'Backup failed.');
-		
+
 		return false;
 	}
 
-	win.webContents.send('save-settings'); //if settings pass all sanity checks, go ahead and save them. 
+	win.webContents.send('save-settings'); //if settings pass all sanity checks, go ahead and save them.
 	win.webContents.send('notification','Backup started.');
-	
+
 	var destination_sub_folder = generateDestinationSubFolder(arg, source_folder, destination_folder);
-	
+
 	//var path_to_shadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe"); current directory lost when run as scheduled task
 	var path_to_shadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe'; //32-bit version
 	if (os.arch = 'x64') {
@@ -186,17 +186,17 @@ function runBackup(msg, arg) {
 		path_to_shadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe'; //64-bit version
 	}
 	console.log('path_to_shadowspawn', path_to_shadowspawn);
-	
+
 	promiseGetAvailableDriveLetter.then(function(shadow_drive_letter) {console.log('then')
-	
+
 	//Get backup type (e.g. full, mirror, etc.)
 	var backup_type = ' '; //blank assumes full backup type
 	if (arg.type = 'mirror') {
 		backup_type = '/MIR ' //Mirror a directory tree (Mirror also deletes files in the backup to match the source)
 	}
-	
+
 	//Get exclusions
-	var file_exclusions = '/XF desktop.ini '; //exclude the file desktop.ini since it hides the true name of the My Documents folder for example. 
+	var file_exclusions = '/XF desktop.ini '; //exclude the file desktop.ini since it hides the true name of the My Documents folder for example.
 	var folder_exclusions = '';
 	if (arg.excludes) {
 		folder_exclusions += '/XD '; //exclude directories
@@ -209,8 +209,8 @@ function runBackup(msg, arg) {
 		}
 	}
 	console.log('folder_exclusions: ' + folder_exclusions);
-	
-	var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNILOG:%appdata%\\SolidBackup\\log.txt';
+
+	var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:2 /W:10 /NP /ETA /UNILOG:%appdata%\\SolidBackup\\log.txt';
 	//var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
 	//var backup_command = 'robocopy "' + source_folder + '" "' + destination_folder + destination_sub_folder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
 	/*
@@ -221,7 +221,7 @@ function runBackup(msg, arg) {
 	RoboCopy is a Windows command for copying files. I used the following options with RoboCopy. For details see https://ss64.com/nt/robocopy.html
 
 	/E Copy Subfolders, including Empty Subfolders
-	/COPY:DAT copy all but S=Security, O=Owner info, and U=aUditing info (since users may not have elevated priviledges on a network drive (in a corporate environment). 
+	/COPY:DAT copy all but S=Security, O=Owner info, and U=aUditing info (since users may not have elevated priviledges on a network drive (in a corporate environment).
 	/FFT Assume FAT File Times (2-second date/time granularity): can help with backing up to a Linux network drive where the clock would otherwise cause problems when determining what files have updated
 	/Z Copy files in restartable mode (survive network glitch)
 	/ZB Use restartable mode; if access denied use Backup mode ***what is backup mode?
@@ -229,7 +229,7 @@ function runBackup(msg, arg) {
 	/XF desktop.ini Stops folders from being renamed. E.g. The date on the end of the "destination_sub_folder" gets dropped to match the original. For more details, see: https://superuser.com/questions/567331/robocopy-mir-changes-destination-folder-name-how-to-prevent-that#744582
 	/XD excludes any directores the user specifies
 	/XJ eXclude Junctions (These can cause endless loops of nested folders on the backup destination. For explanation, see: https://www.sevenforums.com/general-discussion/60292-robocopy-mass-nesting-bug.html )
-	/R:5 number of Retries on failed copies: default 1 million
+	/R:2 number of Retries on failed copies: default 1 million
 	/W:10 Wait time between retries: default is 30 seconds
 	/NP No Progress - don't display percentage copied (it creates very long log files)
 	/ETA Show Estimated Time of Arrival of copied files
@@ -239,7 +239,7 @@ function runBackup(msg, arg) {
 	//ls_backup = spawn('cmd.exe', ['/c', backup_command, source_folder, destination_folder, "/E /COPYALL /FFT /Z /XJ /ETA"]);
 	//ls_backup = spawn('cmd.exe', ['/c', backup_command, source_folder, destination_folder, ["/E","/COPYALL","/FFT","/Z","/XJ","/ETA"]]);
 	ls_backup = spawn(backup_command, [], { shell: true });
-	
+
 	fs.writeFile(app.getPath('appData') + '\\solidbackup\\log.txt', '', function(err) {
 		if(err) {
 			console.log('Error writing to log.txt', err);
@@ -248,7 +248,7 @@ function runBackup(msg, arg) {
 			updateBackupLog();
 		}
 	});
-	
+
 	ls_backup.stdout.on('data', function (data) {
 		//console.log('stdout: ' + data);
 		console.log('' + data);
@@ -256,7 +256,7 @@ function runBackup(msg, arg) {
 
 	ls_backup.stderr.on('data', function (data) {
 		console.log('stderr: ' + data);
-		
+
 		dialog.showMessageBox({
 			type: 'error',
 			title: 'Backup Failed',
@@ -267,14 +267,14 @@ function runBackup(msg, arg) {
 
 	ls_backup.on('exit', function (code) {
 		console.log('child process exited with code ' + code);
-		
+
 		if ((code == 1)||(code == 2)) {
 		// If there is an error while processing (e.g. ShadowSpawn fails to
 		// create the shadow copy), ShadowSpawn exits with status 1.
 
 		// If there is an error in usage (i.e. the user specifies an unknown
 		// option), ShadowSpawn exits with status 2.
-			
+
 			win.webContents.send('reset-progress', 'Backup failed.');
 			win.webContents.send('notification','Backup failed.');
 			dialog.showMessageBox({
@@ -283,35 +283,35 @@ function runBackup(msg, arg) {
 				message: 'Backup failed (Exit code ' + code + ')',
 				buttons: ['OK']
 			});
-			
-		} else { 
-		//ShadowSpawn finishes successfully 
+
+		} else {
+		//ShadowSpawn finishes successfully
 			fs.readdir(destination_folder, function (err, files) {
 				if (err) {
-					throw err; 
+					throw err;
 				}
 				cleanUpOldBackups(files, arg, source_folder, destination_folder);
 			});
-			
+
 			win.webContents.send('reset-progress', 'Backup complete!');
 			updateBackupLog(true);
 			win.webContents.send('notification','Backup complete.');
-			
+
 		}
-			
+
 
 	});
-	
+
 	return true;
 	})
 }
 
 var reload_log;
 function updateBackupLog(reset) {
-	
+
 	const bWindow = require('electron').BrowserWindow;
 	var win = bWindow.getAllWindows()[0];
-	
+
 	if (reset) {
 		clearInterval(reload_log);
 		setTimeout(function() { //update one last time after clearing the timer.
@@ -322,7 +322,7 @@ function updateBackupLog(reset) {
 					win.webContents.send('update-backup-log-display', data, 'last_time');
 				}
 			});
-		}, 4000); 
+		}, 4000);
 	} else {
 		reload_log = setInterval( function () {
 			fs.readFile(app.getPath('appData') + '\\solidbackup\\log.txt', function(err, data) {
@@ -340,7 +340,7 @@ var promiseGetAvailableDriveLetter = new Promise(function(resolve, reject) {
 	var letters = ['Q','R','S','T','U','V','W','X','Y','Z','A','B','D','E','F','G','H','I','J','K','L','M','N','O','P'];
 	var used_letters = "";
 	var letter = "";
-	
+
 	var exec = require('child_process').exec;
 	var cmd = 'wmic logicaldisk get deviceid';
 	exec(cmd, function(err, stdout, stderr) {
@@ -354,12 +354,12 @@ var promiseGetAvailableDriveLetter = new Promise(function(resolve, reject) {
 		for (var i = 0; i < letters.length; i++) {
 			if (used_letters.indexOf(letters[i]+":")>-1) {
 				console.log('Drive letter',letters[i],'is taken')
-			} else { 
+			} else {
 				letter = letters[i]
 				break;
 			}
 		}
-		
+
 		if (stderr) {
 			console.log('stderr data')
 			console.log(stderr);
@@ -375,7 +375,7 @@ var promiseGetAvailableDriveLetter = new Promise(function(resolve, reject) {
 		try {
 			// fs.readdir(letters[i] + ':\\', function (err) {
 				// if (err) {
-					// throw err; 
+					// throw err;
 				// }
 			// });
 			fs.statSync(letters[i] + ':\\');
@@ -385,36 +385,36 @@ var promiseGetAvailableDriveLetter = new Promise(function(resolve, reject) {
 			break;
 		}
 	}*/
-	
+
 })
 
 function generateDestinationSubFolder(arg, source_folder, destination_folder) {
 	//either renames an old sub folder or creates a new sub folder
-	var now = new Date(); 
+	var now = new Date();
 	var destination_sub_folder = source_folder.substring(source_folder.lastIndexOf('\\'),source_folder.length) + ' ' + getDateTime(now) + ' (' + arg['type'] + ')';
 	var files = fs.readdirSync(destination_folder);
-	
+
 	//////fs.mkdirSync(destination_folder + destination_sub_folder);
-	
+
 	if (arg.type == 'mirror') {
-	
+
 		var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\')+1,source_folder.length).replace(/([\^\$\+\.\,\=\(\)\[\]\{\}])/g,'\\$1'); //Gets folder name and escapes RegExp special characters
 		var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg['type'] + '\\)');
-		
+
 		exec = require('child_process').exec;
-		
+
 		if (arg.type == 'mirror') {
-			
+
 			var matching_backups = [];
 			for (var i = 0; i < files.length; i++) {
 				if (backups_re.test(files[i])) {
 					matching_backups.push(files[i]);
 				}
 			}
-			
+
 			if (matching_backups.length >= arg.number_of_mirror) {
 				var oldest_backup = matching_backups[0];
-				
+
 				fs.renameSync(destination_folder + '\\' + oldest_backup, destination_folder + destination_sub_folder);
 				/* number_of_backups_to_delete = matching_backups.length - arg['number_of_full'];
 				for (var i = 0; i < number_of_backups_to_delete; i++) {
@@ -430,32 +430,32 @@ function generateDestinationSubFolder(arg, source_folder, destination_folder) {
 	} else { // full backup
 		fs.mkdirSync(destination_folder + destination_sub_folder);
 	}
-	
+
 	return destination_sub_folder;
 }
 
 function cleanUpOldBackups(files, arg, source_folder, destination_folder) {
 	var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\')+1,source_folder.length).replace(/([\^\$\+\.\,\=\(\)\[\]\{\}])/g,'\\$1'); //Gets folder name and escapes RegExp special characters
 	var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)');
-	
+
 	exec = require('child_process').exec;
-	
+
 	if ((arg['type'] == 'full')||(arg.type == 'mirror')) {
-		
+
 		var matching_backups = [];
 		for (var i = 0; i < files.length; i++) {
 			if (backups_re.test(files[i])) {
 				matching_backups.push(files[i]);
 			}
 		}
-		
+
 		var number_of_backups_to_delete = 0;
 		if (arg.type == 'full') {
 			number_of_backups_to_delete = matching_backups.length - arg['number_of_full'];
 		} else if (arg.type == 'mirror') {
 			number_of_backups_to_delete = matching_backups.length - arg['number_of_mirror'];
 		}
-		
+
 		for (var i = 0; i < number_of_backups_to_delete; i++) {
 			console.log('delete old backup: ', matching_backups[i]);
 			exec('rmdir /s /q "' + destination_folder + '\\' + matching_backups[i] + '"', function (err) {

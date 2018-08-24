@@ -11,6 +11,13 @@
 ## Completed
 ### Next version
 
+### 0.4.4
+- Add space to product name on shortcut.
+- Balance spacing on wordmark.
+
+### 0.4.3
+- Remove space from product name since it wasn't working reliably
+
 ### 0.4.2
 - Improve message when auto-update finishes downloading.
 - Add space to package name "Solid Backup"
