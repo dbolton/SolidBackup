@@ -6,6 +6,7 @@
   "author": "David Bolton",
   "main": "main.js",
   "build": {
+    "productName": "Solid Backup",
     "appId": "info.davidbolton.solidbackup",
     "files": [
       "index.html",
@@ -18,9 +19,6 @@
     "extraFiles": [
       "Binaries/"
     ],
-    "extraMetadata": {
-      "name": "Solid Backup"
-    },
     "publish": [
       {
         "provider": "github",
