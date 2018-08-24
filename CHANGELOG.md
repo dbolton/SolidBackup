@@ -12,8 +12,9 @@
 ### Next version
 
 ### 0.4.4
-- Add space to product name on shortcut.
-- Balance spacing on wordmark.
+- Change shortcut name from "SolidBackup" to "Solid Backup".
+- Fix spacing on wordmark.
+- Reduce retries from 5 to 2  for errors when backing up a particular file.
 
 ### 0.4.3
 - Remove space from product name since it wasn't working reliably

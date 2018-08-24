@@ -29,8 +29,7 @@
       "requestedExecutionLevel": "highestAvailable"
     },
     "nsis": {
-      "shortcutName": "Solid Backup",
-      "artifactName": "Solid Backup Setup ${version}.${ext}"
+      "shortcutName": "Solid Backup"
     }
   },
   "scripts": {
