@@ -39,14 +39,14 @@
 <li>
 <h3 title="How much would you like to backup each time?">Type</h3>
 <ul class="radio">
-<li title="Complete but slow. Any history takes up lots of disk space."><p><label><input type="radio" name="backup_type" id="full" value="full" checked="checked"> <strong>Full</strong>: Make a complete backup every time.</label></p>
-	<div class="full"><ul>
-	<li><input type="number" id="number_of_full" value="3" min="1" max="99"> Number of full backups to keep <div id="number_of_full_message" class="message"></div></li>
-</ul></div></li>
-
 <li title="Fast after the initial backups. Any history takes up lots of disk space. Warning: If a file is deleted on your computer, it gets deleted from the mirror at the next backup. Therefore rotating through multiple mirrors is recommended."><p><label><input type="radio" name="backup_type" id="mirror" value="mirror"> <strong>Mirror</strong>: Update backup to match source</label></p>
 	<div class="mirror"><ul>
 	<li><input type="number" id="number_of_mirror" value="3" min="1" max="99"> Number of mirror backups to rotate through <div id="number_of_mirror_message" class="message"></div></li>
+</ul></div></li>
+
+<li title="Complete but slow. Any history takes up lots of disk space."><p><label><input type="radio" name="backup_type" id="full" value="full" checked="checked"> <strong>Full</strong>: Make a complete backup every time.</label></p>
+	<div class="full"><ul>
+	<li><input type="number" id="number_of_full" value="3" min="1" max="99"> Number of full backups to keep <div id="number_of_full_message" class="message"></div></li>
 </ul></div></li>
 
 <li style="display:none"><p><label><input type="radio" name="backup_type" id="automatic" value="automatic" disabled> [Not implemented yet]<br> <strong>Automatic</strong>: Make multiple backups based on available space (recommended when you have plenty of storage space for backups, like an external hard disk dedicated to backups). Keeps daily backups for the last two weeks (incremental backups), weekly backups for the last two months (differential backups), and monthly backups (full backups) as space permits. When hitting space limits, oldest backups get deleted first.</label></p></li>

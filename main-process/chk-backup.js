@@ -210,7 +210,7 @@ function runBackup(msg, arg) {
 	}
 	console.log('folder_exclusions: ' + folder_exclusions);
 
-	var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:2 /W:10 /NP /ETA /UNILOG:%appdata%\\SolidBackup\\log.txt';
+	var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:1 /W:3 /NP /ETA /UNILOG:%appdata%\\SolidBackup\\log.txt';
 	//var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
 	//var backup_command = 'robocopy "' + source_folder + '" "' + destination_folder + destination_sub_folder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
 	/*
@@ -229,8 +229,8 @@ function runBackup(msg, arg) {
 	/XF desktop.ini Stops folders from being renamed. E.g. The date on the end of the "destination_sub_folder" gets dropped to match the original. For more details, see: https://superuser.com/questions/567331/robocopy-mir-changes-destination-folder-name-how-to-prevent-that#744582
 	/XD excludes any directores the user specifies
 	/XJ eXclude Junctions (These can cause endless loops of nested folders on the backup destination. For explanation, see: https://www.sevenforums.com/general-discussion/60292-robocopy-mass-nesting-bug.html )
-	/R:2 number of Retries on failed copies: default 1 million
-	/W:10 Wait time between retries: default is 30 seconds
+	/R:1 number of Retries on failed copies: default 1 million
+	/W:3 Wait time between retries: default is 30 seconds
 	/NP No Progress - don't display percentage copied (it creates very long log files)
 	/ETA Show Estimated Time of Arrival of copied files
 	*/
