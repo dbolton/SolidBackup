@@ -1,6 +1,5 @@
 ## Planned for later releases
 - Check for no time on schedule when you click backup
-- Find in page (useful for searching logs)
 - Label backups as partial until complete. Resume the partial backups before starting a new one
 - Add error checking to excluded folders
 - Finish documentation for running
@@ -15,7 +14,7 @@
 
 ### 0.4.5
 - To speed up backups, reduced retries from 2 to 1 and reduced wait time between retries from 10 seconds to 3 seconds.
-- Move "Mirror" option above "Full" backup type, since the "Mirror" option is more useful. 
+- Move "Mirror" option above "Full" backup type, since the "Mirror" option is more useful.
 
 ### 0.4.4
 - Change shortcut name from "SolidBackup" to "Solid Backup".

@@ -555,7 +555,7 @@ app.on('activate', () => {
 //
 //IMPORT JS
 //
-require('./main-process/chk-backup.js');
+var chkBackup = require('./main-process/chk-backup.js');
 
 
 
@@ -564,6 +564,18 @@ require('./main-process/chk-backup.js');
 //
 ipc.on('save-settings',saveSettings);
 function saveSettings(msg, arg) {
+	if (arg.pass) {
+		arg.pass = chkBackup.checkAllPaths('save', arg);
+	}
+	if (!arg.pass) {
+		dialog.showMessageBox({
+			type: 'error',
+			title: 'Save Settings Failed',
+			message: 'Unable to save the settings. Please review the error messages on the page.',
+			buttons: ['OK']
+		});
+		return
+	}
 	var fs=require('fs');
 	var settings_file = '\\solidbackup\\backup-settings.txt';
 	if (dev_build) {

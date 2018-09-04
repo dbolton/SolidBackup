@@ -129,13 +129,13 @@ var reload_log;
 
 //Call save settings
 document.getElementById('save').addEventListener('click', function(event) {
-	ipc.send('save-settings',getAllUserInputs() );
 	check();
+	ipc.send('save-settings',getAllUserInputs() );
 	document.getElementById('save').disabled = true;
 });
 ipc.on('save-settings', function () {
-	ipc.send('save-settings',getAllUserInputs() );
 	check();
+	ipc.send('save-settings',getAllUserInputs() );
 	document.getElementById('save').disabled = true;
 });
 
@@ -427,6 +427,10 @@ function check(event){
 	summarize();
 	ipc.send('check', getAllUserInputs(), false);
 }
+function reportError(area_id, message) {
+	document.getElementById(area_id+'_message').innerHTML = message;
+	document.getElementById(area_id).className = 'error';
+}
 function getAllUserInputs() {
 
 	clearAllErrors();
@@ -495,25 +499,21 @@ function getAllUserInputs() {
 	//Number of backups
 	if (!((user_input['number_of_full'] >= 1) && (user_input['number_of_full'] <= 99) && (Math.round(user_input['number_of_full'],0) == user_input['number_of_full']))) {
 		user_input['pass'] = false;
-		document.getElementById('number_of_full_message').innerHTML = 'Error: The number of full backups must be a whole number between 1 and 99';
-		document.getElementById('number_of_full').className = 'error';
+		reportError('number_of_full', 'Error: The number of full backups must be a whole number between 1 and 99');
 	}
 	if (!((user_input['number_of_full_diff'] >= 1) && (user_input['number_of_full_diff'] <= 99) && (Math.round(user_input['number_of_full_diff'],0) == user_input['number_of_full_diff']))) {
 		user_input['pass'] = false;
-		document.getElementById('number_of_full_diff_message').innerHTML = 'Error: The number of full backups must be a whole number between 1 and 99';
-		document.getElementById('number_of_full_diff').className = 'error';
+		reportError('number_of_full_diff', 'Error: The number of full backups must be a whole number between 1 and 99');
 	}
 	if (!((user_input['number_of_differential'] >= 1) && (user_input['number_of_differential'] <= 99) && (Math.round(user_input['number_of_differential'],0) == user_input['number_of_differential']))) {
 		user_input['pass'] = false;
-		document.getElementById('number_of_differential_message').innerHTML = 'Error: The number of differential backups must be a whole number between 1 and 99';
-		document.getElementById('number_of_differential').className = 'error';
+		reportError('number_of_differential', 'Error: The number of differential backups must be a whole number between 1 and 99');
 	}
 
 	//Schedule settings
 	if ((user_input['start_time'] == '') && !(user_input['no_schedule'])) {
 		user_input['pass'] = false;
-		document.getElementById('start_time_message').innerHTML = 'Error: Please complete the start time, including hours, minutes, and AM/PM';
-		document.getElementById('start_time').className = 'error';
+		reportError('start_time', 'Error: Please complete the start time, including hours, minutes, and AM/PM');
 
 		var collapsible = document.getElementsByClassName('collapsible')[0];
 		collapsible.getElementsByTagName('h3')[0].classList.add('expanded');
@@ -521,8 +521,7 @@ function getAllUserInputs() {
 	}
 	if ((user_input['weekly']) && !(user_input['monday']) && !(user_input['tuesday']) && !(user_input['wednesday']) && !(user_input['thursday']) && !(user_input['friday']) && !(user_input['saturday']) && !(user_input['sunday'])) {
 		user_input['pass'] = false;
-		document.getElementById('weekly_days_message').innerHTML = 'Error: Please select at least one day for the weekly backup to take place.';
-		document.getElementById('weekly_days').className = 'error';
+		reportError('weekly_days', 'Error: Please select at least one day for the weekly backup to take place.');
 
 		var collapsible = document.getElementsByClassName('collapsible')[0];
 		collapsible.getElementsByTagName('h3')[0].classList.add('expanded');
@@ -530,8 +529,7 @@ function getAllUserInputs() {
 	}
 	if ((user_input['monthly']) && !(user_input['date'])) { //&& !(user_input['d1']) && !(user_input['d2']) && !(user_input['d3']) && !(user_input['d4']) && !(user_input['d5']) && !(user_input['d6']) && !(user_input['d7']) && !(user_input['d8']) && !(user_input['d9']) && !(user_input['d10']) && !(user_input['d11']) && !(user_input['d12']) && !(user_input['d13']) && !(user_input['d4']) && !(user_input['d15']) && !(user_input['d16']) && !(user_input['d17']) && !(user_input['d18']) && !(user_input['d19']) && !(user_input['d20']) && !(user_input['d21']) && !(user_input['d22']) && !(user_input['d23']) && !(user_input['d24']) && !(user_input['d25']) && !(user_input['d26']) && !(user_input['d27']) && !(user_input['d28']) && !(user_input['d29']) && !(user_input['d30']) && !(user_input['d31']) && !(user_input['dlast'])) { //No longer needed now that the date is a select menu rather than checkboxes or radio dials
 		user_input['pass'] = false;
-		document.getElementById('monthly_days_message').innerHTML = 'Error: Please select a date for the monthly backup to take place.';
-		document.getElementById('monthly_days').className = 'error';
+		reportError('monthly_days_message', 'Error: Please select a date for the monthly backup to take place.');
 
 		var collapsible = document.getElementsByClassName('collapsible')[0];
 		collapsible.getElementsByTagName('h3')[0].classList.add('expanded');
@@ -540,6 +538,7 @@ function getAllUserInputs() {
 
 	document.getElementById('ready').checked = true;
 
+  console.log('user_input.pass:',user_input.pass)
 	return user_input;
 }
 function clearAllErrors() {

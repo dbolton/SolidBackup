@@ -50,8 +50,11 @@ ipc.on('open-exclude-folder-dialog', function (event, path) {
 /*
 CHECK PATHS
 */
-ipc.on('check', checkAllPaths);
-function checkAllPaths(evnt, arg) {//console.log(arg['destination_folder']+" Blank" + arg['destination_folder']=='')
+ipc.on('check', checkAllPathsFunction);
+function checkAllPathsFunction(evnt,arg) {
+	exports.checkAllPaths(evnt, arg)
+}
+exports.checkAllPaths = function(evnt, arg) {
 	const bWindow = require('electron').BrowserWindow;
 	var win = bWindow.getFocusedWindow();
 
@@ -92,8 +95,8 @@ function checkAllPaths(evnt, arg) {//console.log(arg['destination_folder']+" Bla
 		}
 
 		console.log('[Valid paths] pass: ', pass);
-		return pass;
 	}
+	return pass;
 }
 
 function checkPathExists(path, which_folder) {
@@ -160,7 +163,7 @@ function runBackup(msg, arg) {
 	var source_folder = path.resolve(arg['source_folder']);
 	var destination_folder = path.resolve(arg['destination_folder']);
 
-	if (checkAllPaths(msg, arg) == false) {
+	if (exports.checkAllPaths(msg, arg) == false) {
 		dialog.showMessageBox({
 			type: 'error',
 			title: 'Backup Failed',
