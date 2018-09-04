@@ -30,7 +30,9 @@ if '%errorlevel%' NEQ '0' (
 
 
 
-cd "%~dp0" REM switch to directory of batch file
+@REM switch to directory of batch file
+cd "%~dp0" 
+
 @echo on
 cmd /K "yarn dev"
 
