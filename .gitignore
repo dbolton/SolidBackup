@@ -6,6 +6,7 @@ node_modules/
 package-lock.json
 yarn.lock
 *.log
+*.tgz
 
 #ignore any shortcuts and bat files (created locally for convienience)
 *.lnk
