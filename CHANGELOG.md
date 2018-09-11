@@ -12,14 +12,14 @@
 ### Next version
 
 ### 0.4.5
-- Prevent saves and backups if there are errors on the page
+- Prevent saves and backups if there are errors on the page.
 - To speed up backups, reduced retries from 2 to 1 and reduced wait time between retries from 10 seconds to 3 seconds.
 - Move "Mirror" option above "Full" backup type, since the "Mirror" option is more useful.
 
 ### 0.4.4
 - Change shortcut name from "SolidBackup" to "Solid Backup".
 - Fix spacing on wordmark.
-- Reduce retries from 5 to 2  for errors when backing up a particular file.
+- Reduce retries from 5 to 2 for errors when backing up a particular file.
 
 ### 0.4.3
 - Remove space from product name since it wasn't working reliably
