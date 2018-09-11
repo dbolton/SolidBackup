@@ -35,17 +35,20 @@
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "dev": "./node_modules/.bin/electron . /dev",
+    "test": "standard && node my-tests.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "publish": "build -p always"
   },
   "devDependencies": {
     "electron": "^1.8.7",
-    "electron-builder": "^19.27.3"
+    "electron-builder": "^19.27.3",
+    "standard": "*"
   },
   "dependencies": {
     "electron-log": "^2.2.17",
-    "electron-updater": "^3.1.1"
+    "electron-updater": "^3.1.1",
+    "standard": "^12.0.1"
   },
   "repository": {
     "type": "git",
