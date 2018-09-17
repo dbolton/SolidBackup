@@ -4,7 +4,6 @@ const shell = require('electron').shell
 const { app } = require('electron').remote
 
 const os = require('os')
-const username = os.userInfo().username
 
 /*
 EVENT BINDING
@@ -189,7 +188,7 @@ ipc.on('show-backup-log', function () {
 // update backup log
 var first_char = 334
 var encoding = 'utf-16'
-if (/6\..*/.test(require('os').release())) { // Robocopy on Windows 7 does not do a true Unicode log (it has a bug). UNILOG is actually iso-8859-1 instead of utf-8
+if (/6\..*/.test(os.release())) { // Robocopy on Windows 7 does not do a true Unicode log (it has a bug). UNILOG is actually iso-8859-1 instead of utf-8
   first_char = 165
   encoding = 'iso-8859-1'
 }
