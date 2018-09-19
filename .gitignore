@@ -7,6 +7,10 @@ package-lock.json
 yarn.lock
 *.log
 *.tgz
+*.tar
+*.tar.gz
+*.tar.xz
+*.tar.bz2
 
 #ignore any shortcuts and bat files (created locally for convienience)
 *.lnk
