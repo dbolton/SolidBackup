@@ -2,6 +2,22 @@
 
 
 @echo off
+echo SolidBackup
+echo Copyright (C) 2018  David Bolton
+echo.
+echo This program is free software: you can redistribute it and/or modify
+echo it under the terms of the GNU General Public License as published by
+echo the Free Software Foundation, either version 3 of the License, or
+echo (at your option) any later version.
+echo.
+echo This program is distributed in the hope that it will be useful,
+echo but WITHOUT ANY WARRANTY; without even the implied warranty of
+echo MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+echo.
+echo See the GNU General Public License for more details.
+echo You should have received a copy of the GNU General Public License along with this program.
+echo If not, see <http://www.gnu.org/licenses/>.
+echo.
 
 :: BatchGotAdmin
 :-------------------------------------
