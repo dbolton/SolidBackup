@@ -2,7 +2,7 @@
 
 
 @echo off
-echo SolidBackup
+echo Solid Backup
 echo Copyright (C) 2018  David Bolton
 echo.
 echo This program is free software: you can redistribute it and/or modify
