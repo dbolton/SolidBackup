@@ -5,7 +5,7 @@
 * **Free** and open source. Solid Backup is licensed under the GPL v3.
 
 ## [Download](https://github.com/dbolton/Solid Backup/releases/latest)
-1. Go to the [latest release](https://github.com/dbolton/Solid Backup/releases/latest) and choose the file that ends ".exe".
+1. Go to the [latest release](https://github.com/dbolton/SolidBackup/releases/latest) and choose the file that ends ".exe".
 2. Open the .exe file to install the software. (The same installer works on x86 and x64 computers.)
 3. If you get a message "Windows protected your PC," choose **More info**, then choose **Run anyway**. This message occurs for installers that are not signed. Unfortunately, code signing cost money and this software is not bringing in money. (This only occurs when Windows SmartScreen is active in Windows 8, 8.1, and 10, otherwise you will just get the standard administrative permission prompt.)
 4. Choose **Yes** when Microsoft Windows asks "Do you want to allow this app from an unknown publisher to make changes to your device?" Solid Backup requires administrative permissions to access all folders and files on your drive of choice (this includes open files). Scheduling backups also requires administrative permission.
