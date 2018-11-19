@@ -12,8 +12,10 @@
 
 ## Completed
 ### Next version
- - Excluded files and folders can now include spaces.
- - Initial work to move to "Standard JavaScript" code style
+
+### 0.5.0
+ - You can now exclude files and folders that have spaces in the name.
+ - Began initial work to move to "Standard JavaScript" code style
 
 ### 0.4.5
 - Prevent saves and backups if there are errors on the page.
