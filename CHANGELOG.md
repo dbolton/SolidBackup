@@ -15,6 +15,7 @@
 
 ### 0.5.0
  - You can now exclude files and folders that have spaces in the name.
+ - Moved log file from last parameter to first parameter (on Robocopy) so that the log still displays if there are errors in later parameters (such as file and folder exclusions).
  - Began initial work to move to "Standard JavaScript" code style
 
 ### 0.4.5
