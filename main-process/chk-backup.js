@@ -203,9 +203,9 @@ function runBackup (msg, arg) {
       folder_exclusions += '/XD ' // exclude directories
       for (var i = 0; i < arg.excludes.length; i++) {
         if (arg.excludes[i].className == 'file') {
-          file_exclusions += '' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + ' '
+          file_exclusions += '"' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + '" '
         } else if (arg.excludes[i].className == 'folder') {
-          folder_exclusions += '' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + ' '
+          folder_exclusions += '"' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + '" '
         }
       }
     }

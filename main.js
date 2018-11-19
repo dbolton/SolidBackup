@@ -8,7 +8,7 @@ const electron = require('electron')
 const dialog = electron.dialog
 const globalShortcut = electron.globalShortcut
 
-var dev_build = false
+var devBuild = false
 var ls_backup // reference to spawned backup process
 ipc.on('kill-backup', function () { killBackup(); console.log('kill-backup received') })
 function killBackup () {
@@ -412,10 +412,10 @@ function createWindow () {
     sendStatusToWindow('Error in auto-updater. ' + err)
   })
   autoUpdater.on('download-progress', (progressObj) => {
-    let log_message = 'Download speed: ' + progressObj.bytesPerSecond
-    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
-    log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-    sendStatusToWindow(log_message)
+    let logMessage = 'Download speed: ' + progressObj.bytesPerSecond
+    logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%'
+    logMessage = logMessage + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
+    sendStatusToWindow(logMessage)
   })
   autoUpdater.on('update-downloaded', (info, releaseNotes, releaseName) => {
     sendStatusToWindow('Update downloaded')
@@ -449,12 +449,12 @@ function createWindow () {
   // PROCESS COMMAND LINE ARGUMENTS
   // E.g. You can run a backup from the Window Scheduler using the command: SolidBackup.exe /run
   //
-  let command_line_arg = process.argv
-  // win.webContents.on('dom-ready', function() { win.webContents.send('path-error', 'general', 'Command Line Arguments: '+command_line_arg+'; length: '+command_line_arg.length); } );
+  let commandLineArg = process.argv
+  // win.webContents.on('dom-ready', function() { win.webContents.send('path-error', 'general', 'Command Line Arguments: '+commandLineArg+'; length: '+commandLineArg.length); } );
 
-  for (var i = 1; i < command_line_arg.length; i++) {
-    if (command_line_arg[i] == '/run') {
-      console.log('command_line_arg[' + i + ']: ' + command_line_arg[i])
+  for (var i = 1; i < commandLineArg.length; i++) {
+    if (commandLineArg[i] == '/run') {
+      console.log('commandLineArg[' + i + ']: ' + commandLineArg[i])
       win.showInactive()// show window but not in foreground (to avoid interrupting user)
       console.log('win.showInactive()')
       console.log('win id')
@@ -464,17 +464,17 @@ function createWindow () {
         // var start = openSettings();
         win.webContents.send('get-inputs-and-backup')
       })
-    } else if (command_line_arg[i] == '/dev') {
+    } else if (commandLineArg[i] == '/dev') {
       // show Developer Tools and resize window to accommodate
-      console.log(command_line_arg[i], 'Show developer tools')
+      console.log(commandLineArg[i], 'Show developer tools')
       win.setSize(win.getSize()[0] + 500, win.getSize()[1])
       win.maximize()
       win.toggleDevTools()
-      dev_build = true
-    } else if (command_line_arg[i] == '.') {
+      devBuild = true
+    } else if (commandLineArg[i] == '.') {
       // do nothing
     } else {
-      console.log(command_line_arg[i], 'is not a known argument')
+      console.log(commandLineArg[i], 'is not a known argument')
     }
   }
   if (!win.isVisible()) {
@@ -574,7 +574,7 @@ function saveSettings (msg, arg) {
   }
   var fs = require('fs')
   var settings_file = '\\solidbackup\\backup-settings.txt'
-  if (dev_build) {
+  if (devBuild) {
     settings_file = '\\solidbackup\\backup-settings-dev.txt'
   }
   fs.writeFile(app.getPath('appData') + settings_file, JSON.stringify(arg, null, 2), function (err) {
@@ -669,7 +669,7 @@ ipc.on('open-settings', openSettings)
 function openSettings (msg, arg) {
   var fs = require('fs')
   var settings_file = '\\solidbackup\\backup-settings.txt'
-  if (dev_build) {
+  if (devBuild) {
     settings_file = '\\solidbackup\\backup-settings-dev.txt'
   }
   fs.readFile(app.getPath('appData') + settings_file, 'utf8', function (err, data) {

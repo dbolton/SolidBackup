@@ -1,5 +1,7 @@
 ## Planned for later releases
+- Fix exclusions that include spaces in the path name. Also check quotation marks
 - Label backups as partial until complete. Resume the partial backups before starting a new one
+- Investigate letter mapping to network drives for backup folders
 - Add error checking to excluded folders
 - Finish documentation for running
 
@@ -10,6 +12,8 @@
 
 ## Completed
 ### Next version
+ - Excluded files and folders can now include spaces.
+ - Initial work to move to "Standard JavaScript" code style
 
 ### 0.4.5
 - Prevent saves and backups if there are errors on the page.
