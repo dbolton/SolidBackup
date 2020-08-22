@@ -14,6 +14,7 @@
 ### Next version
 
 ### 0.5.1
+ - You can now start Solid Backup from a path that includes spaces. 
  - Continued work toward "Standard JavaScript" code style.
 
 ### 0.5.0

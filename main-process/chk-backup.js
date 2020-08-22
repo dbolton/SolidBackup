@@ -211,7 +211,9 @@ function runBackup (msg, arg) {
     }
     console.log('folder_exclusions: ' + folder_exclusions)
 
-    var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:1 /W:3 /NP /ETA'
+    var backup_command = '"' + path_to_shadowspawn + '" "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:1 /W:3 /NP /ETA'
+
+    console.log('backup_command: ' + backup_command)
     // var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
     // var backup_command = 'robocopy "' + source_folder + '" "' + destination_folder + destination_sub_folder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
     /*
