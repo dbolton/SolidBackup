@@ -19,7 +19,7 @@ ipc.on('open-source-folder-dialog', function (event, path) {
   var verified_path = checkPathExists(path, 'source_folder')
   console.log('source_folder path:', verified_path)
   dialog.showOpenDialog({
-    defaultPath: verified_path['path'],
+    defaultPath: verified_path.path,
     properties: ['openFile', 'openDirectory', 'showHiddenFiles']
   }, function (files) {
     if (files) event.sender.send('selected-source-folder', files)
@@ -29,7 +29,7 @@ ipc.on('open-source-folder-dialog', function (event, path) {
 ipc.on('open-destination-folder-dialog', function (event, path) {
   var verified_path = checkPathExists(path, 'destination_folder')
   dialog.showOpenDialog({
-    defaultPath: verified_path['path'],
+    defaultPath: verified_path.path,
     properties: ['openFile', 'openDirectory', 'showHiddenFiles']
   }, function (files) {
     if (files) event.sender.send('selected-destination-folder', files)
@@ -39,7 +39,7 @@ ipc.on('open-destination-folder-dialog', function (event, path) {
 ipc.on('open-exclude-folder-dialog', function (event, path) {
   var verified_path = checkPathExists(path, 'source_folder')
   dialog.showOpenDialog({
-    defaultPath: verified_path['path'],
+    defaultPath: verified_path.path,
     properties: ['openFile', 'openDirectory', 'showHiddenFiles']
   }, function (files) {
     console.log('files', files)
@@ -59,32 +59,32 @@ exports.checkAllPaths = function (evnt, arg) {
   var win = bWindow.getFocusedWindow()
 
   var pass = true
-  if (arg['pass'] == false) { // set pass as false if validation already failed on client side
+  if (arg.pass === false) { // set pass as false if validation already failed on client side
     pass = false
   }
-  if (arg['source_folder'] == '') { // set pass as false if path is blank
+  if (arg.source_folder === '') { // set pass as false if path is blank
     win.webContents.send('path-error', 'source_folder', 'Error: Please select a folder.')
     pass = false
   }
-  if (arg['destination_folder'] == '') { // set pass as false if path is blank
-    console.log("arg['destination_folder']", arg['destination_folder'])
+  if (arg.destination_folder === '') { // set pass as false if path is blank
+    console.log('arg.destination_folder', arg.destination_folder)
     win.webContents.send('path-error', 'destination_folder', 'Error: Please select a folder.')
     pass = false
   }
 
   if (pass) {
-    var source_folder = path.resolve(arg['source_folder'])
-    var destination_folder = path.resolve(arg['destination_folder'])
+    var source_folder = path.resolve(arg.source_folder)
+    var destination_folder = path.resolve(arg.destination_folder)
 
     var e_source_folder = checkPathExists(source_folder, 'source_folder')
     var e_destination_folder = checkPathExists(destination_folder, 'destination_folder')
 
-    if ((e_source_folder['pass'] == false) || (e_destination_folder['pass'] == false)) { // if folders do not exist
+    if ((e_source_folder.pass === false) || (e_destination_folder.pass === false)) { // if folders do not exist
       pass = false
-    } else if (source_folder.substring(0, 1) == destination_folder.substring(0, 1)) { // if drive letters are the same
+    } else if (source_folder.substring(0, 1) === destination_folder.substring(0, 1)) { // if drive letters are the same
       win.webContents.send('path-error', 'destination_folder', 'Warning: The destination folder should be on a different drive than the source folder. Backing up to the same drive does not protect your data if that drive fails.')
 
-      if (source_folder == destination_folder) { // if source and destination are the same folder
+      if (source_folder === destination_folder) { // if source and destination are the same folder
         win.webContents.send('path-error', 'destination_folder', 'Error: The destination folder cannot be the same as the source folder above.')
         pass = false
       } else if (!path.relative(source_folder, destination_folder).startsWith('..')) { // if the destination folder is a sub directory of the source folder
@@ -101,20 +101,20 @@ exports.checkAllPaths = function (evnt, arg) {
 function checkPathExists (path, which_folder) {
   try {
     fs.statSync(path)
-    return { 'path': path, 'pass': true }
+    return { path: path, pass: true }
   } catch (e) {
     try {
-      if (true === true) { // remote.send({action:'prompt', message:'The following folder does not exist. Would you like to create the folder? \n\n' + folder})) {
+      if (true) { // remote.send({action:'prompt', message:'The following folder does not exist. Would you like to create the folder? \n\n' + folder})) {
         // fs.mkdirSync(path);
         const bWindow = require('electron').BrowserWindow
         var win = bWindow.getFocusedWindow()
         win.webContents.send('path-error', which_folder, 'Error: The folder does not exist.')
-        return { 'path': path, 'pass': false, 'error': e }
+        return { path: path, pass: false, error: e }
       } else {
-        return { 'path': path, 'pass': false, 'error': e }
+        return { path: path, pass: false, error: e }
       }
     } catch (e) {
-      return { 'path': path, 'pass': false, 'error': e }
+      return { path: path, pass: false, error: e }
     }
   }
 }
@@ -129,19 +129,19 @@ function getDateTime (now) {
   var hour = now.getHours()
   var minute = now.getMinutes()
   var second = now.getSeconds()
-  if (month.toString().length == 1) {
+  if (month.toString().length === 1) {
     var month = '0' + month
   }
-  if (day.toString().length == 1) {
+  if (day.toString().length === 1) {
     var day = '0' + day
   }
-  if (hour.toString().length == 1) {
+  if (hour.toString().length === 1) {
     var hour = '0' + hour
   }
-  if (minute.toString().length == 1) {
+  if (minute.toString().length === 1) {
     var minute = '0' + minute
   }
-  if (second.toString().length == 1) {
+  if (second.toString().length === 1) {
     var second = '0' + second
   }
   var dateTime = year + '-' + month + '-' + day + ' ' + hour + '.' + minute + '.' + second
@@ -157,10 +157,10 @@ function runBackup (msg, arg) {
   // var win = bWindow.fromId(0);
   var win = bWindow.getAllWindows()[0]
 
-  var source_folder = path.resolve(arg['source_folder'])
-  var destination_folder = path.resolve(arg['destination_folder'])
+  var source_folder = path.resolve(arg.source_folder)
+  var destination_folder = path.resolve(arg.destination_folder)
 
-  if (exports.checkAllPaths(msg, arg) == false) {
+  if (exports.checkAllPaths(msg, arg) === false) {
     dialog.showMessageBox({
       type: 'error',
       title: 'Backup Failed',
@@ -181,7 +181,7 @@ function runBackup (msg, arg) {
 
   // var path_to_shadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe"); current directory lost when run as scheduled task
   var path_to_shadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe' // 32-bit version
-  if (os.arch = 'x64') {
+  if (os.arch === 'x64') {
     // path_to_shadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe"); current directory lost when run as scheduled task
     path_to_shadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe' // 64-bit version
   }
@@ -192,7 +192,7 @@ function runBackup (msg, arg) {
 
     // Get backup type (e.g. full, mirror, etc.)
     var backup_type = ' ' // blank assumes full backup type
-    if (arg.type = 'mirror') {
+    if (arg.type === 'mirror') {
       backup_type = '/MIR ' // Mirror a directory tree (Mirror also deletes files in the backup to match the source)
     }
 
@@ -202,9 +202,9 @@ function runBackup (msg, arg) {
     if (arg.excludes) {
       folder_exclusions += '/XD ' // exclude directories
       for (var i = 0; i < arg.excludes.length; i++) {
-        if (arg.excludes[i].className == 'file') {
+        if (arg.excludes[i].className === 'file') {
           file_exclusions += '"' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + '" '
-        } else if (arg.excludes[i].className == 'folder') {
+        } else if (arg.excludes[i].className === 'folder') {
           folder_exclusions += '"' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + '" '
         }
       }
@@ -271,7 +271,7 @@ function runBackup (msg, arg) {
     ls_backup.on('exit', function (code) {
       console.log('child process exited with code ' + code)
 
-      if ((code == 1) || (code == 2)) {
+      if ((code === 1) || (code === 2)) {
         // If there is an error while processing (e.g. ShadowSpawn fails to
         // create the shadow copy), ShadowSpawn exits with status 1.
 
@@ -369,37 +369,37 @@ var promiseGetAvailableDriveLetter = new Promise(function (resolve, reject) {
   })
 
   /*
-	for (var i = 0; i < letters.length; i++) {
-		try {
-			// fs.readdir(letters[i] + ':\\', function (err) {
-				// if (err) {
-					// throw err;
-				// }
-			// });
-			fs.statSync(letters[i] + ':\\');
-			console.log('Drive letter' + letters[i] + ' is taken');
-		} catch(e) {
-			letter = letters[i];
-			break;
-		}
-	} */
+  for (var i = 0; i < letters.length; i++) {
+    try {
+      // fs.readdir(letters[i] + ':\\', function (err) {
+        // if (err) {
+          // throw err;
+        // }
+      // });
+      fs.statSync(letters[i] + ':\\');
+      console.log('Drive letter' + letters[i] + ' is taken');
+    } catch(e) {
+      letter = letters[i];
+      break;
+    }
+  } */
 })
 
 function generateDestinationSubFolder (arg, source_folder, destination_folder) {
   // either renames an old sub folder or creates a new sub folder
   var now = new Date()
-  var destination_sub_folder = source_folder.substring(source_folder.lastIndexOf('\\'), source_folder.length) + ' ' + getDateTime(now) + ' (' + arg['type'] + ')'
+  var destination_sub_folder = source_folder.substring(source_folder.lastIndexOf('\\'), source_folder.length) + ' ' + getDateTime(now) + ' (' + arg.type + ')'
   var files = fs.readdirSync(destination_folder)
 
   /// ///fs.mkdirSync(destination_folder + destination_sub_folder);
 
-  if (arg.type == 'mirror') {
-    var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\') + 1, source_folder.length).replace(/([\^\$\+\.\,\=\(\)\[\]\{\}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
-    var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg['type'] + '\\)')
+  if (arg.type === 'mirror') {
+    var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\') + 1, source_folder.length).replace(/([\^$+.,=()[\]{}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
+    var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)')
 
     exec = require('child_process').exec
 
-    if (arg.type == 'mirror') {
+    if (arg.type === 'mirror') {
       var matching_backups = []
       for (var i = 0; i < files.length; i++) {
         if (backups_re.test(files[i])) {
@@ -412,12 +412,12 @@ function generateDestinationSubFolder (arg, source_folder, destination_folder) {
 
         fs.renameSync(destination_folder + '\\' + oldest_backup, destination_folder + destination_sub_folder)
         /* number_of_backups_to_delete = matching_backups.length - arg['number_of_full'];
-				for (var i = 0; i < number_of_backups_to_delete; i++) {
-					console.log('delete old backup: ', matching_backups[i]);
-					exec('rmdir /s /q "' + destination_folder + '\\' + matching_backups[i] + '"', function (err) {
-						if (err) { console.log('Error removing old backup:', err); }
-					});
-				} */
+        for (var i = 0; i < number_of_backups_to_delete; i++) {
+          console.log('delete old backup: ', matching_backups[i]);
+          exec('rmdir /s /q "' + destination_folder + '\\' + matching_backups[i] + '"', function (err) {
+            if (err) { console.log('Error removing old backup:', err); }
+          });
+        } */
       } else {
         fs.mkdirSync(destination_folder + destination_sub_folder)
       }
@@ -430,12 +430,12 @@ function generateDestinationSubFolder (arg, source_folder, destination_folder) {
 }
 
 function cleanUpOldBackups (files, arg, source_folder, destination_folder) {
-  var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\') + 1, source_folder.length).replace(/([\^\$\+\.\,\=\(\)\[\]\{\}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
+  var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\') + 1, source_folder.length).replace(/([\^$+.,=()[\]{}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
   var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)')
 
   exec = require('child_process').exec
 
-  if ((arg['type'] == 'full') || (arg.type == 'mirror')) {
+  if ((arg.type === 'full') || (arg.type === 'mirror')) {
     var matching_backups = []
     for (var i = 0; i < files.length; i++) {
       if (backups_re.test(files[i])) {
@@ -444,10 +444,10 @@ function cleanUpOldBackups (files, arg, source_folder, destination_folder) {
     }
 
     var number_of_backups_to_delete = 0
-    if (arg.type == 'full') {
-      number_of_backups_to_delete = matching_backups.length - arg['number_of_full']
-    } else if (arg.type == 'mirror') {
-      number_of_backups_to_delete = matching_backups.length - arg['number_of_mirror']
+    if (arg.type === 'full') {
+      number_of_backups_to_delete = matching_backups.length - arg.number_of_full
+    } else if (arg.type === 'mirror') {
+      number_of_backups_to_delete = matching_backups.length - arg.number_of_mirror
     }
 
     for (var i = 0; i < number_of_backups_to_delete; i++) {
