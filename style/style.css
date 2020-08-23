@@ -39,7 +39,7 @@ button.delete {
 }
 button.x-small {
 	padding: 1px 10px 2px 10px;
-	font-size: 12.5px; 
+	font-size: 12.5px;
 }
 button:hover {
 	border: solid 1px black;
@@ -117,7 +117,7 @@ ul.radio, ul.radio ul ul.radio {
 ul.radio ul, ul.radio ol {
 	text-indent:initial;
 }
-#monthly_ul {
+#monthlyUl {
 	columns: 5;
 }
 samp {
@@ -128,7 +128,7 @@ samp {
 /*
 iframe {
 	width: 650px;
-	height: 25em; 
+	height: 25em;
 	position: relative;
 	left: -2.5em;
 	transform: scale(0.8, 0.8);

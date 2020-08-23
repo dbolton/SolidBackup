@@ -9,10 +9,10 @@ const dialog = electron.dialog
 const globalShortcut = electron.globalShortcut
 
 var devBuild = false
-var ls_backup // reference to spawned backup process
+var lsBackup // reference to spawned backup process
 ipc.on('kill-backup', function () { killBackup(); console.log('kill-backup received') })
 function killBackup () {
-  ls_backup.kill('SIGINT')
+  lsBackup.kill('SIGINT')
   console.log('killed')
 }
 
@@ -75,13 +75,13 @@ function createWindow () {
         label: 'Reset to &Default Settings',
         accelerator: 'CmdOrCtrl+Shift+D',
         click: function (item, focusedWindow) {
-          win.webContents.send('set-user-input', 'source_folder', 'C:\\Users\\' + username + '\\Documents')
-          win.webContents.send('set-user-input', 'destination_folder', '')
+          win.webContents.send('set-user-input', 'sourceFolder', 'C:\\Users\\' + username + '\\Documents')
+          win.webContents.send('set-user-input', 'destinationFolder', '')
           win.webContents.send('set-user-input', 'full', '', true)
-          win.webContents.send('set-user-input', 'number_of_full', '3')
-          win.webContents.send('set-user-input', 'number_of_mirror', '3')
+          win.webContents.send('set-user-input', 'numberOfFull', '3')
+          win.webContents.send('set-user-input', 'numberOfMirror', '3')
           var date = new Date(new Date().getTime() + 10 * 60000) // 10 minutes ahead of current time
-          win.webContents.send('set-user-input', 'start_time', (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes())
+          win.webContents.send('set-user-input', 'startTime', (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes())
           win.webContents.send('set-user-input', 'weekly', '', true)
           win.webContents.send('set-user-input', 'monday', '', false)
           win.webContents.send('set-user-input', 'tuesday', '', false)
@@ -98,12 +98,12 @@ function createWindow () {
         label: '&E-mail Backup at CofC IHQ',
         accelerator: 'CmdOrCtrl+Shift+E',
         click: function (item, focusedWindow) {
-          win.webContents.send('set-user-input', 'source_folder', 'C:\\Users\\' + username + '\\Documents\\Outlook Files')
-          win.webContents.send('set-user-input', 'destination_folder', '\\\\hqfs1\\general\\Users\\' + username)
+          win.webContents.send('set-user-input', 'sourceFolder', 'C:\\Users\\' + username + '\\Documents\\Outlook Files')
+          win.webContents.send('set-user-input', 'destinationFolder', '\\\\hqfs1\\general\\Users\\' + username)
           win.webContents.send('set-user-input', 'mirror', '', true)
-          win.webContents.send('set-user-input', 'number_of_mirror', '1')
+          win.webContents.send('set-user-input', 'numberOfMirror', '1')
           var date = new Date(new Date().getTime() + 10 * 60000) // 10 minutes ahead of current time
-          win.webContents.send('set-user-input', 'start_time', (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes())
+          win.webContents.send('set-user-input', 'startTime', (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes())
           win.webContents.send('set-user-input', 'weekly', '', true)
           win.webContents.send('set-user-input', 'monday', '', false)
           win.webContents.send('set-user-input', 'tuesday', '', false)
@@ -120,12 +120,12 @@ function createWindow () {
         label: '&Test Settings (for Development)',
         accelerator: 'CmdOrCtrl+Shift+Alt+D',
         click: function (item, focusedWindow) {
-          win.webContents.send('set-user-input', 'source_folder', 'C:\\Users\\dbolton\\Documents\\IT\\Backup\\Test Space')
-          win.webContents.send('set-user-input', 'destination_folder', 'F:\\Backup (Test)')
+          win.webContents.send('set-user-input', 'sourceFolder', 'C:\\Users\\dbolton\\Documents\\IT\\Backup\\Test Space')
+          win.webContents.send('set-user-input', 'destinationFolder', 'F:\\Backup (Test)')
           win.webContents.send('set-user-input', 'full', '', true)
-          win.webContents.send('set-user-input', 'number_of_full', '3')
+          win.webContents.send('set-user-input', 'numberOfFull', '3')
           var date = new Date(new Date().getTime() + 2 * 60000) // 2 minutes ahead of current time
-          win.webContents.send('set-user-input', 'start_time', (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes())
+          win.webContents.send('set-user-input', 'startTime', (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes())
           win.webContents.send('set-user-input', 'daily', '', true)
           win.webContents.send('set-user-input', 'shadow', '', false)
           win.webContents.send('check')
@@ -134,11 +134,11 @@ function createWindow () {
         label: 'Author’s &Personal Settings',
         accelerator: 'CmdOrCtrl+Shift+P',
         click: function (item, focusedWindow) {
-          win.webContents.send('set-user-input', 'source_folder', 'C:\\Users\\')
-          win.webContents.send('set-user-input', 'destination_folder', 'F:\\Backup (work-bb)')
+          win.webContents.send('set-user-input', 'sourceFolder', 'C:\\Users\\')
+          win.webContents.send('set-user-input', 'destinationFolder', 'F:\\Backup (work-bb)')
           win.webContents.send('set-user-input', 'mirror', '', true)
-          win.webContents.send('set-user-input', 'number_of_mirror', '3')
-          win.webContents.send('set-user-input', 'start_time', '12:30')
+          win.webContents.send('set-user-input', 'numberOfMirror', '3')
+          win.webContents.send('set-user-input', 'startTime', '12:30')
           win.webContents.send('set-user-input', 'weekly', '', true)
           win.webContents.send('set-user-input', 'monday', '', true)
           win.webContents.send('set-user-input', 'tuesday', '', true)
@@ -453,7 +453,7 @@ function createWindow () {
   // win.webContents.on('dom-ready', function() { win.webContents.send('path-error', 'general', 'Command Line Arguments: '+commandLineArg+'; length: '+commandLineArg.length); } );
 
   for (var i = 1; i < commandLineArg.length; i++) {
-    if (commandLineArg[i] == '/run') {
+    if (commandLineArg[i] === '/run') {
       console.log('commandLineArg[' + i + ']: ' + commandLineArg[i])
       win.showInactive()// show window but not in foreground (to avoid interrupting user)
       console.log('win.showInactive()')
@@ -464,14 +464,14 @@ function createWindow () {
         // var start = openSettings();
         win.webContents.send('get-inputs-and-backup')
       })
-    } else if (commandLineArg[i] == '/dev') {
+    } else if (commandLineArg[i] === '/dev') {
       // show Developer Tools and resize window to accommodate
       console.log(commandLineArg[i], 'Show developer tools')
       win.setSize(win.getSize()[0] + 500, win.getSize()[1])
       win.maximize()
       win.toggleDevTools()
       devBuild = true
-    } else if (commandLineArg[i] == '.') {
+    } else if (commandLineArg[i] === '.') {
       // do nothing
     } else {
       console.log(commandLineArg[i], 'is not a known argument')
@@ -487,6 +487,9 @@ function createWindow () {
   //
   var exec = require('child_process').exec
   exec('NET SESSION', function (err, so, se) {
+    if (err) {
+      console.error('exec error: ' + err)
+    }
     if (se.length === 0) {
       console.log('Solid Backup running as administrator')
     } else {
@@ -499,18 +502,18 @@ function createWindow () {
       }
       win.webContents.on('dom-ready', function () {
         electron.dialog.showMessageBox(win, options, function (response) {
-          if (response == 0) { // User clicked "Run as Administrator"
+          if (response === 0) { // User clicked "Run as Administrator"
             console.log('Restart Solid Backup to run as administrator')
 
             var spawn = require('child_process').spawn
-            var exe_name = app.getPath('exe').substring(app.getPath('exe').lastIndexOf('\\') + 1, app.getPath('exe').length) // Solid Backup.exe if running released version. electron.exe if running dev version
-            var path_to_SolidBackup_exe = app.getPath('exe')
-            if (path_to_SolidBackup_exe.indexOf('electron.exe') > -1) {
-              path_to_SolidBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe' // for testing purposes only
+            var exeName = app.getPath('exe').substring(app.getPath('exe').lastIndexOf('\\') + 1, app.getPath('exe').length) // Solid Backup.exe if running released version. electron.exe if running dev version
+            var pathToSolidBackupExe = app.getPath('exe')
+            if (pathToSolidBackupExe.indexOf('electron.exe') > -1) {
+              pathToSolidBackupExe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe' // for testing purposes only
             }
             // launch daemon to kill Solid Backup and relauch with elevated privileges. (When running dev. version, kills electron.exe instead of SolidBackup.exe)
             // var daemon = spawn('taskkill /IM SolidBackup.exe || (taskkill /IM electron.exe && start ElevateSolidBackup.vbs) && start ElevateSolidBackup.vbs', [], {
-            var daemon = spawn('taskkill /IM ' + exe_name + ' && start Binaries\\ElevateSolidBackup.vbs ' + path_to_SolidBackup_exe, [], {
+            var daemon = spawn('taskkill /IM ' + exeName + ' && start Binaries\\ElevateSolidBackup.vbs ' + pathToSolidBackupExe, [], {
               shell: true,
               detached: true
             })
@@ -573,28 +576,28 @@ function saveSettings (msg, arg) {
     return
   }
   var fs = require('fs')
-  var settings_file = '\\solidbackup\\backup-settings.txt'
+  var settingsFile = '\\solidbackup\\backup-settings.txt'
   if (devBuild) {
-    settings_file = '\\solidbackup\\backup-settings-dev.txt'
+    settingsFile = '\\solidbackup\\backup-settings-dev.txt'
   }
-  fs.writeFile(app.getPath('appData') + settings_file, JSON.stringify(arg, null, 2), function (err) {
+  fs.writeFile(app.getPath('appData') + settingsFile, JSON.stringify(arg, null, 2), function (err) {
     if (err) {
       console.log('Error saving to backup-settings.txt:', err)
     } else {
-      console.log('Backup settings saved to ' + app.getPath('appData') + settings_file)
+      console.log('Backup settings saved to ' + app.getPath('appData') + settingsFile)
     }
   })
 
   // Save scheduled task
-  // var path_to_SolidBackup_exe = path.resolve('SolidBackup.exe');//current directory is lost if started as a scheduled task
-  var path_to_SolidBackup_exe = app.getPath('exe')
-  if (path_to_SolidBackup_exe.indexOf('electron.exe') > -1) {
-    path_to_SolidBackup_exe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe' // for testing purposes only
+  // var pathToSolidBackupExe = path.resolve('SolidBackup.exe');//current directory is lost if started as a scheduled task
+  var pathToSolidBackupExe = app.getPath('exe')
+  if (pathToSolidBackupExe.indexOf('electron.exe') > -1) {
+    pathToSolidBackupExe = 'C:\\Users\\dbolton\\AppData\\Local\\Programs\\solidbackup\\SolidBackup.exe' // for testing purposes only
   }
-  console.log('path_to_SolidBackup_exe:', path_to_SolidBackup_exe)
+  console.log('pathToSolidBackupExe:', pathToSolidBackupExe)
 
   // schtasks /Create /SC DAILY /TN solidbackup /TR "'C:\Users\dbolton\Downloads\SolidBackup-win32-x64\SolidBackup.exe' /run" /ST 11:25 /RL HIGHEST /F
-  var schedule_command = 'schtasks /Create /TN SolidBackup /TR "\'' + path_to_SolidBackup_exe + '\' /run" /RL HIGHEST /F'
+  var scheduleCommand = 'schtasks /Create /TN SolidBackup /TR "\'' + pathToSolidBackupExe + '\' /run" /RL HIGHEST /F'
 
   // Description for solidbackup task: Runs your scheduled backups. If this task is disable or removed, SolidBackup will be unable to run your scheduled backup.
   //
@@ -603,32 +606,32 @@ function saveSettings (msg, arg) {
   // /F forcefully creates the task and suppresses warnings if the task already exists
   //
 
-  if (arg['no_schedule']) {
-    // schedule_command = 'schtasks /Delete /TN SolidBackup /F';
-    // schedule_command = 'schtasks /Query /TN "SolidBackup" 2> nul && schtasks /Delete /TN "SolidBackup" /F >nul' //check if SolidBackup task exists. If it does, delete it.
-    schedule_command = 'schtasks /Query /TN "SolidBackup" 2> nul && (schtasks /Delete /TN "SolidBackup" /F) || (exit /b 0)' // check if SolidBackup task exists. If it does, delete it. If it doesn't, reset error code to 0 to avoid error messages in the GUI
+  if (arg['noSchedule']) {
+    // scheduleCommand = 'schtasks /Delete /TN SolidBackup /F';
+    // scheduleCommand = 'schtasks /Query /TN "SolidBackup" 2> nul && schtasks /Delete /TN "SolidBackup" /F >nul' //check if SolidBackup task exists. If it does, delete it.
+    scheduleCommand = 'schtasks /Query /TN "SolidBackup" 2> nul && (schtasks /Delete /TN "SolidBackup" /F) || (exit /b 0)' // check if SolidBackup task exists. If it does, delete it. If it doesn't, reset error code to 0 to avoid error messages in the GUI
   } else if (arg['daily']) {
-    schedule_command += ' /SC DAILY /ST ' + arg['start_time']
+    scheduleCommand += ' /SC DAILY /ST ' + arg['startTime']
   } else if (arg['weekly']) {
-    schedule_command += ' /SC WEEKLY /ST ' + arg['start_time'] + ' /D "'
-    if (arg['monday']) schedule_command += ' MON'
-    if (arg['tuesday']) schedule_command += ' TUE'
-    if (arg['wednesday']) schedule_command += ' WED'
-    if (arg['thursday']) schedule_command += ' THU'
-    if (arg['friday']) schedule_command += ' FRI'
-    if (arg['saturday']) schedule_command += ' SAT'
-    if (arg['sunday']) schedule_command += ' SUN'
-    schedule_command += '"'
+    scheduleCommand += ' /SC WEEKLY /ST ' + arg['startTime'] + ' /D "'
+    if (arg['monday']) scheduleCommand += ' MON'
+    if (arg['tuesday']) scheduleCommand += ' TUE'
+    if (arg['wednesday']) scheduleCommand += ' WED'
+    if (arg['thursday']) scheduleCommand += ' THU'
+    if (arg['friday']) scheduleCommand += ' FRI'
+    if (arg['saturday']) scheduleCommand += ' SAT'
+    if (arg['sunday']) scheduleCommand += ' SUN'
+    scheduleCommand += '"'
   } else if (arg['monthly']) {
-    schedule_command += ' /SC MONTHLY /ST ' + arg['start_time'] + ' /D "'
-    schedule_command += arg['date']
-    schedule_command += '"'
+    scheduleCommand += ' /SC MONTHLY /ST ' + arg['startTime'] + ' /D "'
+    scheduleCommand += arg['date']
+    scheduleCommand += '"'
   }
 
-  console.log('schedule_command:', schedule_command)
+  console.log('scheduleCommand:', scheduleCommand)
   var spawn = require('child_process').spawn
 
-  var ls = spawn(schedule_command, [], { shell: true })
+  var ls = spawn(scheduleCommand, [], { shell: true })
 
   ls.stdout.on('data', function (data) {
     console.log('stdout: ' + data)
@@ -668,12 +671,12 @@ function saveSettings (msg, arg) {
 ipc.on('open-settings', openSettings)
 function openSettings (msg, arg) {
   var fs = require('fs')
-  var settings_file = '\\solidbackup\\backup-settings.txt'
+  var settingsFile = '\\solidbackup\\backup-settings.txt'
   if (devBuild) {
-    settings_file = '\\solidbackup\\backup-settings-dev.txt'
+    settingsFile = '\\solidbackup\\backup-settings-dev.txt'
   }
-  fs.readFile(app.getPath('appData') + settings_file, 'utf8', function (err, data) {
-    if ((err) && (arg != 'first-run')) { // ignore error if this is the first run (i.e. the settings file hasn't been created yet)
+  fs.readFile(app.getPath('appData') + settingsFile, 'utf8', function (err, data) {
+    if ((err) && (arg !== 'first-run')) { // ignore error if this is the first run (i.e. the settings file hasn't been created yet)
       const options = {
         type: 'error',
         title: 'Error',
@@ -685,6 +688,9 @@ function openSettings (msg, arg) {
     }
 
     if (!err) {
+      // upgrade from underscore_variable_naming_convention to cammelCase.
+      data = data.replace('"destination_folder":', '"destinationFolder":').replace('"no_schedule":', '"noSchedule":').replace('"number_of_differential":', '"numberOfDifferential":').replace('"number_of_full_diff":', '"numberOfFullDiff":').replace('"number_of_full":', '"numberOfFull":').replace('"number_of_mirror":', '"numberOfMirror":').replace('"source_folder":', '"sourceFolder":').replace('"start_time":', '"startTime":')
+
       win.webContents.send('open-settings', JSON.parse(data))
     }
   })

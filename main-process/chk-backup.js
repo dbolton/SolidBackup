@@ -7,7 +7,7 @@ const electron = require('electron')
 const dialog = electron.dialog
 var fs = require('fs')
 
-// const error_checking = require('./error-checking.js');
+// const errorChecking = require('./error-checking.js');
 
 /*
 FILE DIALOGS
@@ -16,10 +16,10 @@ FILE DIALOGS
 // const dialog = require('electron').dialog
 
 ipc.on('open-source-folder-dialog', function (event, path) {
-  var verified_path = checkPathExists(path, 'source_folder')
-  console.log('source_folder path:', verified_path)
+  var verifiedPath = checkPathExists(path, 'sourceFolder')
+  console.log('sourceFolder path:', verifiedPath)
   dialog.showOpenDialog({
-    defaultPath: verified_path.path,
+    defaultPath: verifiedPath.path,
     properties: ['openFile', 'openDirectory', 'showHiddenFiles']
   }, function (files) {
     if (files) event.sender.send('selected-source-folder', files)
@@ -27,9 +27,9 @@ ipc.on('open-source-folder-dialog', function (event, path) {
 })
 
 ipc.on('open-destination-folder-dialog', function (event, path) {
-  var verified_path = checkPathExists(path, 'destination_folder')
+  var verifiedPath = checkPathExists(path, 'destinationFolder')
   dialog.showOpenDialog({
-    defaultPath: verified_path.path,
+    defaultPath: verifiedPath.path,
     properties: ['openFile', 'openDirectory', 'showHiddenFiles']
   }, function (files) {
     if (files) event.sender.send('selected-destination-folder', files)
@@ -37,9 +37,9 @@ ipc.on('open-destination-folder-dialog', function (event, path) {
 })
 
 ipc.on('open-exclude-folder-dialog', function (event, path) {
-  var verified_path = checkPathExists(path, 'source_folder')
+  var verifiedPath = checkPathExists(path, 'sourceFolder')
   dialog.showOpenDialog({
-    defaultPath: verified_path.path,
+    defaultPath: verifiedPath.path,
     properties: ['openFile', 'openDirectory', 'showHiddenFiles']
   }, function (files) {
     console.log('files', files)
@@ -62,33 +62,33 @@ exports.checkAllPaths = function (evnt, arg) {
   if (arg.pass === false) { // set pass as false if validation already failed on client side
     pass = false
   }
-  if (arg.source_folder === '') { // set pass as false if path is blank
-    win.webContents.send('path-error', 'source_folder', 'Error: Please select a folder.')
+  if (arg.sourceFolder === '') { // set pass as false if path is blank
+    win.webContents.send('path-error', 'sourceFolder', 'Error: Please select a folder.')
     pass = false
   }
-  if (arg.destination_folder === '') { // set pass as false if path is blank
-    console.log('arg.destination_folder', arg.destination_folder)
-    win.webContents.send('path-error', 'destination_folder', 'Error: Please select a folder.')
+  if (arg.destinationFolder === '') { // set pass as false if path is blank
+    console.log('arg.destinationFolder', arg.destinationFolder)
+    win.webContents.send('path-error', 'destinationFolder', 'Error: Please select a folder.')
     pass = false
   }
 
   if (pass) {
-    var source_folder = path.resolve(arg.source_folder)
-    var destination_folder = path.resolve(arg.destination_folder)
+    var sourceFolder = path.resolve(arg.sourceFolder)
+    var destinationFolder = path.resolve(arg.destinationFolder)
 
-    var e_source_folder = checkPathExists(source_folder, 'source_folder')
-    var e_destination_folder = checkPathExists(destination_folder, 'destination_folder')
+    var eSourceFolder = checkPathExists(sourceFolder, 'sourceFolder')
+    var eDestinationFolder = checkPathExists(destinationFolder, 'destinationFolder')
 
-    if ((e_source_folder.pass === false) || (e_destination_folder.pass === false)) { // if folders do not exist
+    if ((eSourceFolder.pass === false) || (eDestinationFolder.pass === false)) { // if folders do not exist
       pass = false
-    } else if (source_folder.substring(0, 1) === destination_folder.substring(0, 1)) { // if drive letters are the same
-      win.webContents.send('path-error', 'destination_folder', 'Warning: The destination folder should be on a different drive than the source folder. Backing up to the same drive does not protect your data if that drive fails.')
+    } else if (sourceFolder.substring(0, 1) === destinationFolder.substring(0, 1)) { // if drive letters are the same
+      win.webContents.send('path-error', 'destinationFolder', 'Warning: The destination folder should be on a different drive than the source folder. Backing up to the same drive does not protect your data if that drive fails.')
 
-      if (source_folder === destination_folder) { // if source and destination are the same folder
-        win.webContents.send('path-error', 'destination_folder', 'Error: The destination folder cannot be the same as the source folder above.')
+      if (sourceFolder === destinationFolder) { // if source and destination are the same folder
+        win.webContents.send('path-error', 'destinationFolder', 'Error: The destination folder cannot be the same as the source folder above.')
         pass = false
-      } else if (!path.relative(source_folder, destination_folder).startsWith('..')) { // if the destination folder is a sub directory of the source folder
-        win.webContents.send('path-error', 'destination_folder', 'Error: The destination folder cannot be a sub folder of the source.')
+      } else if (!path.relative(sourceFolder, destinationFolder).startsWith('..')) { // if the destination folder is a sub directory of the source folder
+        win.webContents.send('path-error', 'destinationFolder', 'Error: The destination folder cannot be a sub folder of the source.')
         pass = false
       }
     }
@@ -98,21 +98,16 @@ exports.checkAllPaths = function (evnt, arg) {
   return pass
 }
 
-function checkPathExists (path, which_folder) {
+function checkPathExists (path, whichFolder) {
   try {
     fs.statSync(path)
     return { path: path, pass: true }
   } catch (e) {
     try {
-      if (true) { // remote.send({action:'prompt', message:'The following folder does not exist. Would you like to create the folder? \n\n' + folder})) {
-        // fs.mkdirSync(path);
-        const bWindow = require('electron').BrowserWindow
-        var win = bWindow.getFocusedWindow()
-        win.webContents.send('path-error', which_folder, 'Error: The folder does not exist.')
-        return { path: path, pass: false, error: e }
-      } else {
-        return { path: path, pass: false, error: e }
-      }
+      const bWindow = require('electron').BrowserWindow
+      var win = bWindow.getFocusedWindow()
+      win.webContents.send('path-error', whichFolder, 'Error: The folder does not exist.')
+      return { path: path, pass: false, error: e }
     } catch (e) {
       return { path: path, pass: false, error: e }
     }
@@ -130,19 +125,19 @@ function getDateTime (now) {
   var minute = now.getMinutes()
   var second = now.getSeconds()
   if (month.toString().length === 1) {
-    var month = '0' + month
+    month = '0' + month
   }
   if (day.toString().length === 1) {
-    var day = '0' + day
+    day = '0' + day
   }
   if (hour.toString().length === 1) {
-    var hour = '0' + hour
+    hour = '0' + hour
   }
   if (minute.toString().length === 1) {
-    var minute = '0' + minute
+    minute = '0' + minute
   }
   if (second.toString().length === 1) {
-    var second = '0' + second
+    second = '0' + second
   }
   var dateTime = year + '-' + month + '-' + day + ' ' + hour + '.' + minute + '.' + second
   return dateTime
@@ -157,8 +152,8 @@ function runBackup (msg, arg) {
   // var win = bWindow.fromId(0);
   var win = bWindow.getAllWindows()[0]
 
-  var source_folder = path.resolve(arg.source_folder)
-  var destination_folder = path.resolve(arg.destination_folder)
+  var sourceFolder = path.resolve(arg.sourceFolder)
+  var destinationFolder = path.resolve(arg.destinationFolder)
 
   if (exports.checkAllPaths(msg, arg) === false) {
     dialog.showMessageBox({
@@ -177,73 +172,73 @@ function runBackup (msg, arg) {
   win.webContents.send('save-settings') // if settings pass all sanity checks, go ahead and save them.
   win.webContents.send('notification', 'Backup started.')
 
-  var destination_sub_folder = generateDestinationSubFolder(arg, source_folder, destination_folder)
+  var destinationSubFolder = generateDestinationSubFolder(arg, sourceFolder, destinationFolder)
 
-  // var path_to_shadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe"); current directory lost when run as scheduled task
-  var path_to_shadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe' // 32-bit version
-  if (os.arch === 'x64') {
-    // path_to_shadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe"); current directory lost when run as scheduled task
-    path_to_shadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe' // 64-bit version
+  // var pathToShadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe"); current directory lost when run as scheduled task
+  var pathToShadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe' // 32-bit version
+  if (String(os.arch) === 'x64') {
+    // pathToShadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe"); current directory lost when run as scheduled task
+    pathToShadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe' // 64-bit version
   }
-  console.log('path_to_shadowspawn', path_to_shadowspawn)
+  console.log('pathToShadowspawn', pathToShadowspawn)
 
-  promiseGetAvailableDriveLetter.then(function (shadow_drive_letter) {
+  promiseGetAvailableDriveLetter.then(function (shadowDriveLetter) {
     console.log('then')
 
     // Get backup type (e.g. full, mirror, etc.)
-    var backup_type = ' ' // blank assumes full backup type
+    var backupType = ' ' // blank assumes full backup type
     if (arg.type === 'mirror') {
-      backup_type = '/MIR ' // Mirror a directory tree (Mirror also deletes files in the backup to match the source)
+      backupType = '/MIR ' // Mirror a directory tree (Mirror also deletes files in the backup to match the source)
     }
 
     // Get exclusions
-    var file_exclusions = '/XF desktop.ini ' // exclude the file desktop.ini since it hides the true name of the My Documents folder for example.
-    var folder_exclusions = ''
+    var fileExclusions = '/XF desktop.ini ' // exclude the file desktop.ini since it hides the true name of the My Documents folder for example.
+    var folderExclusions = ''
     if (arg.excludes) {
-      folder_exclusions += '/XD ' // exclude directories
+      folderExclusions += '/XD ' // exclude directories
       for (var i = 0; i < arg.excludes.length; i++) {
         if (arg.excludes[i].className === 'file') {
-          file_exclusions += '"' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + '" '
+          fileExclusions += '"' + arg.excludes[i].value.replace(sourceFolder, shadowDriveLetter + ':') + '" '
         } else if (arg.excludes[i].className === 'folder') {
-          folder_exclusions += '"' + arg.excludes[i].value.replace(source_folder, shadow_drive_letter + ':') + '" '
+          folderExclusions += '"' + arg.excludes[i].value.replace(sourceFolder, shadowDriveLetter + ':') + '" '
         }
       }
     }
-    console.log('folder_exclusions: ' + folder_exclusions)
+    console.log('folderExclusions: ' + folderExclusions)
 
-    var backup_command = '"' + path_to_shadowspawn + '" "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:1 /W:3 /NP /ETA'
+    var backupCommand = '"' + pathToShadowspawn + '" "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:1 /W:3 /NP /ETA'
 
-    console.log('backup_command: ' + backup_command)
-    // var backup_command = path_to_shadowspawn + ' "' + source_folder + '" ' + shadow_drive_letter + ': robocopy ' + shadow_drive_letter + ':\ "' + destination_folder + destination_sub_folder + '" ' + backup_type + '/E /COPY:DAT /FFT /Z ' + file_exclusions + folder_exclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
-    // var backup_command = 'robocopy "' + source_folder + '" "' + destination_folder + destination_sub_folder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
+    console.log('backupCommand: ' + backupCommand)
+    // var backupCommand = pathToShadowspawn + ' "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
+    // var backupCommand = 'robocopy "' + sourceFolder + '" "' + destinationFolder + destinationSubFolder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
     /*
-	BACKUP COMMAND
+  BACKUP COMMAND
 
-	ShadowSpawn creates a Volume Shadow Copy on Windows that lets you copy files even if they are open/locked. For details see https://github.com/candera/shadowspawn
+  ShadowSpawn creates a Volume Shadow Copy on Windows that lets you copy files even if they are open/locked. For details see https://github.com/candera/shadowspawn
 
-	RoboCopy is a Windows command for copying files. I used the following options with RoboCopy. For details see https://ss64.com/nt/robocopy.html
+  RoboCopy is a Windows command for copying files. I used the following options with RoboCopy. For details see https://ss64.com/nt/robocopy.html
 
-	/E Copy Subfolders, including Empty Subfolders
-	/COPY:DAT copy all but S=Security, O=Owner info, and U=aUditing info (since users may not have elevated priviledges on a network drive (in a corporate environment).
-	/FFT Assume FAT File Times (2-second date/time granularity): can help with backing up to a Linux network drive where the clock would otherwise cause problems when determining what files have updated
-	/Z Copy files in restartable mode (survive network glitch)
-	/ZB Use restartable mode; if access denied use Backup mode ***what is backup mode?
-	/UNILOG:log_file Output status to Unicode Log file (Recommended for performance)
-	/XF desktop.ini Stops folders from being renamed. E.g. The date on the end of the "destination_sub_folder" gets dropped to match the original. For more details, see: https://superuser.com/questions/567331/robocopy-mir-changes-destination-folder-name-how-to-prevent-that#744582
-	/XD excludes any directores the user specifies
-	/XJ eXclude Junctions (These can cause endless loops of nested folders on the backup destination. For explanation, see: https://www.sevenforums.com/general-discussion/60292-robocopy-mass-nesting-bug.html )
-	/R:1 number of Retries on failed copies: default 1 million
-	/W:3 Wait time between retries: default is 30 seconds
-	/NP No Progress - don't display percentage copied (it creates very long log files)
-	/ETA Show Estimated Time of Arrival of copied files
-	*/
+  /E Copy Subfolders, including Empty Subfolders
+  /COPY:DAT copy all but S=Security, O=Owner info, and U=aUditing info (since users may not have elevated priviledges on a network drive (in a corporate environment).
+  /FFT Assume FAT File Times (2-second date/time granularity): can help with backing up to a Linux network drive where the clock would otherwise cause problems when determining what files have updated
+  /Z Copy files in restartable mode (survive network glitch)
+  /ZB Use restartable mode; if access denied use Backup mode ***what is backup mode?
+  /UNILOG:log_file Output status to Unicode Log file (Recommended for performance)
+  /XF desktop.ini Stops folders from being renamed. E.g. The date on the end of the "destinationSubFolder" gets dropped to match the original. For more details, see: https://superuser.com/questions/567331/robocopy-mir-changes-destination-folder-name-how-to-prevent-that#744582
+  /XD excludes any directores the user specifies
+  /XJ eXclude Junctions (These can cause endless loops of nested folders on the backup destination. For explanation, see: https://www.sevenforums.com/general-discussion/60292-robocopy-mass-nesting-bug.html )
+  /R:1 number of Retries on failed copies: default 1 million
+  /W:3 Wait time between retries: default is 30 seconds
+  /NP No Progress - don't display percentage copied (it creates very long log files)
+  /ETA Show Estimated Time of Arrival of copied files
+  */
 
     var spawn = require('child_process').spawn
 
-    // ls_backup = spawn('cmd.exe', ['/c', backup_command, source_folder, destination_folder, "/E /COPYALL /FFT /Z /XJ /ETA"]);
-    // ls_backup = spawn('cmd.exe', ['/c', backup_command, source_folder, destination_folder, ["/E","/COPYALL","/FFT","/Z","/XJ","/ETA"]]);
+    // lsBackup = spawn('cmd.exe', ['/c', backupCommand, sourceFolder, destinationFolder, "/E /COPYALL /FFT /Z /XJ /ETA"]);
+    // lsBackup = spawn('cmd.exe', ['/c', backupCommand, sourceFolder, destinationFolder, ["/E","/COPYALL","/FFT","/Z","/XJ","/ETA"]]);
 
-    var ls_backup = spawn(backup_command, [], { shell: true })
+    var lsBackup = spawn(backupCommand, [], { shell: true })
 
     fs.writeFile(app.getPath('appData') + '\\solidbackup\\log.txt', '', function (err) {
       if (err) {
@@ -254,23 +249,23 @@ function runBackup (msg, arg) {
       }
     })
 
-    ls_backup.stdout.on('data', function (data) {
+    lsBackup.stdout.on('data', function (data) {
       // console.log('stdout: ' + data);
       console.log('' + data)
     })
 
-    ls_backup.stderr.on('data', function (data) {
+    lsBackup.stderr.on('data', function (data) {
       console.log('stderr: ' + data)
 
       dialog.showMessageBox({
         type: 'error',
         title: 'Backup Failed',
-        message: 'Backup failed. Error: ' + data + '\n\n' + backup_command,
+        message: 'Backup failed. Error: ' + data + '\n\n' + backupCommand,
         buttons: ['OK']
       })
     })
 
-    ls_backup.on('exit', function (code) {
+    lsBackup.on('exit', function (code) {
       console.log('child process exited with code ' + code)
 
       if ((code === 1) || (code === 2)) {
@@ -290,11 +285,11 @@ function runBackup (msg, arg) {
         })
       } else {
         // ShadowSpawn finishes successfully
-        fs.readdir(destination_folder, function (err, files) {
+        fs.readdir(destinationFolder, function (err, files) {
           if (err) {
             throw err
           }
-          cleanUpOldBackups(files, arg, source_folder, destination_folder)
+          cleanUpOldBackups(files, arg, sourceFolder, destinationFolder)
         })
 
         win.webContents.send('reset-progress', 'Backup complete!')
@@ -307,24 +302,24 @@ function runBackup (msg, arg) {
   })
 }
 
-var reload_log
+var reloadLog
 function updateBackupLog (reset) {
   const bWindow = require('electron').BrowserWindow
   var win = bWindow.getAllWindows()[0]
 
   if (reset) {
-    clearInterval(reload_log)
+    clearInterval(reloadLog)
     setTimeout(function () { // update one last time after clearing the timer.
       fs.readFile(app.getPath('appData') + '\\solidbackup\\log.txt', function (err, data) {
         if (err) {
           console.log('Error reading log.txt', err)
         } else {
-          win.webContents.send('update-backup-log-display', data, 'last_time')
+          win.webContents.send('update-backup-log-display', data, 'lastTime')
         }
       })
     }, 4000)
   } else {
-    reload_log = setInterval(function () {
+    reloadLog = setInterval(function () {
       fs.readFile(app.getPath('appData') + '\\solidbackup\\log.txt', function (err, data) {
         if (err) {
           console.log('Error reading log.txt', err)
@@ -338,7 +333,7 @@ function updateBackupLog (reset) {
 
 var promiseGetAvailableDriveLetter = new Promise(function (resolve, reject) {
   var letters = ['Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']
-  var used_letters = ''
+  var usedLetters = ''
   var letter = ''
 
   var exec = require('child_process').exec
@@ -350,9 +345,9 @@ var promiseGetAvailableDriveLetter = new Promise(function (resolve, reject) {
       return
     }
     // console.log(stdout)
-    used_letters = stdout.split(/\s*\n/)
+    usedLetters = stdout.split(/\s*\n/)
     for (var i = 0; i < letters.length; i++) {
-      if (used_letters.indexOf(letters[i] + ':') > -1) {
+      if (usedLetters.indexOf(letters[i] + ':') > -1) {
         console.log('Drive letter', letters[i], 'is taken')
       } else {
         letter = letters[i]
@@ -387,74 +382,74 @@ var promiseGetAvailableDriveLetter = new Promise(function (resolve, reject) {
   } */
 })
 
-function generateDestinationSubFolder (arg, source_folder, destination_folder) {
+function generateDestinationSubFolder (arg, sourceFolder, destinationFolder) {
   // either renames an old sub folder or creates a new sub folder
   var now = new Date()
-  var destination_sub_folder = source_folder.substring(source_folder.lastIndexOf('\\'), source_folder.length) + ' ' + getDateTime(now) + ' (' + arg.type + ')'
-  var files = fs.readdirSync(destination_folder)
+  var destinationSubFolder = sourceFolder.substring(sourceFolder.lastIndexOf('\\'), sourceFolder.length) + ' ' + getDateTime(now) + ' (' + arg.type + ')'
+  var files = fs.readdirSync(destinationFolder)
 
-  /// ///fs.mkdirSync(destination_folder + destination_sub_folder);
+  /// ///fs.mkdirSync(destinationFolder + destinationSubFolder);
 
   if (arg.type === 'mirror') {
-    var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\') + 1, source_folder.length).replace(/([\^$+.,=()[\]{}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
-    var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)')
+    var nameOfSourceFolder = sourceFolder.substring(sourceFolder.lastIndexOf('\\') + 1, sourceFolder.length).replace(/([\^$+.,=()[\]{}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
+    var backupsRe = new RegExp(nameOfSourceFolder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)')
 
     exec = require('child_process').exec
 
     if (arg.type === 'mirror') {
-      var matching_backups = []
+      var matchingBackups = []
       for (var i = 0; i < files.length; i++) {
-        if (backups_re.test(files[i])) {
-          matching_backups.push(files[i])
+        if (backupsRe.test(files[i])) {
+          matchingBackups.push(files[i])
         }
       }
 
-      if (matching_backups.length >= arg.number_of_mirror) {
-        var oldest_backup = matching_backups[0]
+      if (matchingBackups.length >= arg.numberOfMirror) {
+        var oldestBackup = matchingBackups[0]
 
-        fs.renameSync(destination_folder + '\\' + oldest_backup, destination_folder + destination_sub_folder)
-        /* number_of_backups_to_delete = matching_backups.length - arg['number_of_full'];
-        for (var i = 0; i < number_of_backups_to_delete; i++) {
-          console.log('delete old backup: ', matching_backups[i]);
-          exec('rmdir /s /q "' + destination_folder + '\\' + matching_backups[i] + '"', function (err) {
+        fs.renameSync(destinationFolder + '\\' + oldestBackup, destinationFolder + destinationSubFolder)
+        /* numberOfBackupsToDelete = matchingBackups.length - arg['numberOfFull'];
+        for (var i = 0; i < numberOfBackupsToDelete; i++) {
+          console.log('delete old backup: ', matchingBackups[i]);
+          exec('rmdir /s /q "' + destinationFolder + '\\' + matchingBackups[i] + '"', function (err) {
             if (err) { console.log('Error removing old backup:', err); }
           });
         } */
       } else {
-        fs.mkdirSync(destination_folder + destination_sub_folder)
+        fs.mkdirSync(destinationFolder + destinationSubFolder)
       }
     }
   } else { // full backup
-    fs.mkdirSync(destination_folder + destination_sub_folder)
+    fs.mkdirSync(destinationFolder + destinationSubFolder)
   }
 
-  return destination_sub_folder
+  return destinationSubFolder
 }
 
-function cleanUpOldBackups (files, arg, source_folder, destination_folder) {
-  var name_of_source_folder = source_folder.substring(source_folder.lastIndexOf('\\') + 1, source_folder.length).replace(/([\^$+.,=()[\]{}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
-  var backups_re = new RegExp(name_of_source_folder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)')
+function cleanUpOldBackups (files, arg, sourceFolder, destinationFolder) {
+  var nameOfSourceFolder = sourceFolder.substring(sourceFolder.lastIndexOf('\\') + 1, sourceFolder.length).replace(/([\^$+.,=()[\]{}])/g, '\\$1') // Gets folder name and escapes RegExp special characters
+  var backupsRe = new RegExp(nameOfSourceFolder + ' \\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d\.\\d\\d\.\\d\\d \\(' + arg.type + '\\)')
 
   exec = require('child_process').exec
 
   if ((arg.type === 'full') || (arg.type === 'mirror')) {
-    var matching_backups = []
+    var matchingBackups = []
     for (var i = 0; i < files.length; i++) {
-      if (backups_re.test(files[i])) {
-        matching_backups.push(files[i])
+      if (backupsRe.test(files[i])) {
+        matchingBackups.push(files[i])
       }
     }
 
-    var number_of_backups_to_delete = 0
+    var numberOfBackupsToDelete = 0
     if (arg.type === 'full') {
-      number_of_backups_to_delete = matching_backups.length - arg.number_of_full
+      numberOfBackupsToDelete = matchingBackups.length - arg.numberOfFull
     } else if (arg.type === 'mirror') {
-      number_of_backups_to_delete = matching_backups.length - arg.number_of_mirror
+      numberOfBackupsToDelete = matchingBackups.length - arg.numberOfMirror
     }
 
-    for (var i = 0; i < number_of_backups_to_delete; i++) {
-      console.log('delete old backup: ', matching_backups[i])
-      exec('rmdir /s /q "' + destination_folder + '\\' + matching_backups[i] + '"', function (err) {
+    for (let i = 0; i < numberOfBackupsToDelete; i++) {
+      console.log('delete old backup: ', matchingBackups[i])
+      exec('rmdir /s /q "' + destinationFolder + '\\' + matchingBackups[i] + '"', function (err) {
         if (err) { console.log('Error removing old backup:', err) }
       })
     }
