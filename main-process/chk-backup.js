@@ -174,13 +174,13 @@ function runBackup (msg, arg) {
 
   var destinationSubFolder = generateDestinationSubFolder(arg, sourceFolder, destinationFolder)
 
-  // var pathToShadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe"); current directory lost when run as scheduled task
-  var pathToShadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe' // 32-bit version
+  // var pathToShadowSpawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe"); current directory lost when run as scheduled task
+  var pathToShadowSpawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x86\\ShadowSpawn.exe' // 32-bit version
   if (String(os.arch) === 'x64') {
-    // pathToShadowspawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe"); current directory lost when run as scheduled task
-    pathToShadowspawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe' // 64-bit version
+    // pathToShadowSpawn = path.resolve("Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe"); current directory lost when run as scheduled task
+    pathToShadowSpawn = app.getAppPath().split('\\resources\\app.asar').join('') + '\\Binaries\\ShadowSpawn-0.2.2-x64\\ShadowSpawn.exe' // 64-bit version
   }
-  console.log('pathToShadowspawn', pathToShadowspawn)
+  console.log('pathToShadowSpawn', pathToShadowSpawn)
 
   promiseGetAvailableDriveLetter.then(function (shadowDriveLetter) {
     console.log('then')
@@ -206,10 +206,10 @@ function runBackup (msg, arg) {
     }
     console.log('folderExclusions: ' + folderExclusions)
 
-    var backupCommand = '"' + pathToShadowspawn + '" "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:1 /W:3 /NP /ETA'
+    var backupCommand = '"' + pathToShadowSpawn + '" "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:1 /W:3 /NP /ETA'
 
     console.log('backupCommand: ' + backupCommand)
-    // var backupCommand = pathToShadowspawn + ' "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
+    // var backupCommand = pathToShadowSpawn + ' "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
     // var backupCommand = 'robocopy "' + sourceFolder + '" "' + destinationFolder + destinationSubFolder + '" /E /COPY:DAT /FFT /Z /XF desktop.ini /XJ /R:5 /W:10 /NP /ETA /LOG:"%appdata%\\SolidBackup\\log.txt"'; //skips shadow spawn (speeds things up for testing)
     /*
   BACKUP COMMAND
@@ -396,28 +396,26 @@ function generateDestinationSubFolder (arg, sourceFolder, destinationFolder) {
 
     exec = require('child_process').exec
 
-    if (arg.type === 'mirror') {
-      var matchingBackups = []
-      for (var i = 0; i < files.length; i++) {
-        if (backupsRe.test(files[i])) {
-          matchingBackups.push(files[i])
-        }
+    var matchingBackups = []
+    for (var i = 0; i < files.length; i++) {
+      if (backupsRe.test(files[i])) {
+        matchingBackups.push(files[i])
       }
+    }
+    console.log('matchingBackups:' + matchingBackups + ' arg.numberOfMirror:' + arg.numberOfMirror)
+    if (matchingBackups.length >= arg.numberOfMirror) {
+      var oldestBackup = matchingBackups[0]
 
-      if (matchingBackups.length >= arg.numberOfMirror) {
-        var oldestBackup = matchingBackups[0]
-
-        fs.renameSync(destinationFolder + '\\' + oldestBackup, destinationFolder + destinationSubFolder)
-        /* numberOfBackupsToDelete = matchingBackups.length - arg['numberOfFull'];
-        for (var i = 0; i < numberOfBackupsToDelete; i++) {
-          console.log('delete old backup: ', matchingBackups[i]);
-          exec('rmdir /s /q "' + destinationFolder + '\\' + matchingBackups[i] + '"', function (err) {
-            if (err) { console.log('Error removing old backup:', err); }
-          });
-        } */
-      } else {
-        fs.mkdirSync(destinationFolder + destinationSubFolder)
-      }
+      fs.renameSync(destinationFolder + '\\' + oldestBackup, destinationFolder + destinationSubFolder)
+      /* numberOfBackupsToDelete = matchingBackups.length - arg['numberOfFull'];
+      for (var i = 0; i < numberOfBackupsToDelete; i++) {
+        console.log('delete old backup: ', matchingBackups[i]);
+        exec('rmdir /s /q "' + destinationFolder + '\\' + matchingBackups[i] + '"', function (err) {
+          if (err) { console.log('Error removing old backup:', err); }
+        });
+      } */
+    } else {
+      fs.mkdirSync(destinationFolder + destinationSubFolder)
     }
   } else { // full backup
     fs.mkdirSync(destinationFolder + destinationSubFolder)
