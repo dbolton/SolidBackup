@@ -2,8 +2,8 @@
 <html lang='en-US' dir='ltr'>
 <head>
 <meta charset='utf-8'>
+<meta http-equiv="Content-Security-Policy" content="script-src 'self'">
 <title>Solid Backup</title>
-<!--<script src='http://code.jquery.com/jquery-2.1.1.js'></script>-->
 
 <link rel="stylesheet" href="style/style.css">
 </head>
@@ -177,9 +177,10 @@
 <pre id="log" class="active"></pre>
 </div>
 
-<script>
+<script src="render-process/render.js"></script>
+<!--<script>
 require('./render-process/render.js');
 </script>
-
+-->
 </body>
 </html>

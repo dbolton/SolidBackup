@@ -1,6 +1,6 @@
 ## Obtain source code
 1. Download and install [Git](https://www.git-scm.com/) to manage and retrieve the code. The default installation settings are fine.
-2. Clone the Solid Backup code repository
+2. Clone the Solid Backup code repository.
    1. From the **Start Menu**, open **Command Prompt** (or **Git Bash** if prefer the GNU/Linux-style shell).
    2. Navigate to the folder where you want to save the code on your computer. For example, `cd C:\Users\<username>\Documents\Code`
    3. Type: `git clone https://github.com/dbolton/SolidBackup.git` (This creates a folder named "SolidBackup" that contains the entire repository.) (Alternatively, you can use the Git GUI to clone the Solid Backup repository.)
@@ -9,7 +9,7 @@
 3. Download and install [Node.JS](https://nodejs.org/).
 4. Download and install [Yarn](https://yarnpkg.com/en/docs/install#windows-tab).
 5. Solid Backup uses [Electron](https://electron.atom.io/) for UI and several related Node.JS modules. You can install all these dependencies at once.
-   1. Open **Command Prompt**
+   1. Open **Command Prompt**.
    2. Navigate to your Solid Backup folder (your clone of the Solid Backup repository). For example, `cd C:\Users\<username>\Documents\Code\SolidBackup`
    3. Install dependencies. Type: `yarn install`
 
@@ -23,8 +23,15 @@ Normal mode matches what end users see when they run the application. Developer 
 ## Create installer
 See "https://electronjs.org/docs/tutorial/application-distribution" and "https://github.com/electron-userland/electron-builder/"
 
-1. Open **Command Prompt**
-2. Navigate to the Solid Backup directory
+1. Open **Command Prompt**.
+2. Navigate to the Solid Backup directory.
 3. Create the installer by typing: `yarn dist`
 
 Note: If your anti-virus program repeatedly tries to delete the final installer, try running `yarn dist` from command prompt _without_ administrative permission.
+
+## Update dependencies
+1. Open **Command Prompt**.
+2. Navigate to the Solid Backup directory.
+3. Create the installer by typing: `yarn add [package name]`
+
+See package.json for a list of dependencies.

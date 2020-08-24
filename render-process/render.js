@@ -91,7 +91,7 @@ document.getElementById('editSettings').addEventListener('click', function () {
 
 const fileManagerBtn = document.getElementById('openBackup')
 fileManagerBtn.addEventListener('click', function (event) {
-  var pass = shell.openItem(document.getElementById('destinationFolder').value)
+  var pass = shell.openPath(document.getElementById('destinationFolder').value)
   if (!pass) {
     window.alert('Error: Unable to open the destination folder')
   }

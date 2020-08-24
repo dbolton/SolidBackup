@@ -1,4 +1,5 @@
 #ignore build, dist, and node-modules directories
+1. reference/
 dist/
 node_modules/
 

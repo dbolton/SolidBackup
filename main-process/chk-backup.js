@@ -206,7 +206,7 @@ function runBackup (msg, arg) {
     }
     console.log('folderExclusions: ' + folderExclusions)
 
-    var backupCommand = '"' + pathToShadowSpawn + '" "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:1 /W:3 /NP /ETA'
+    var backupCommand = '"' + pathToShadowSpawn + '" "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ': "' + destinationFolder + destinationSubFolder + '" /UNILOG:%appdata%\\SolidBackup\\log.txt ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:1 /W:3 /NP /ETA'
 
     console.log('backupCommand: ' + backupCommand)
     // var backupCommand = pathToShadowSpawn + ' "' + sourceFolder + '" ' + shadowDriveLetter + ': robocopy ' + shadowDriveLetter + ':\ "' + destinationFolder + destinationSubFolder + '" ' + backupType + '/E /COPY:DAT /FFT /Z ' + fileExclusions + folderExclusions + '/XJ /R:5 /W:10 /NP /ETA /UNICODE /UNILOG:%appdata%\\SolidBackup\\log.txt'; //works if decoded as UTF-16
