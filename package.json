@@ -42,13 +42,13 @@
   },
   "devDependencies": {
     "electron": "^9.2.1",
-    "electron-builder": "^19.27.3",
+    "electron-builder": "^22.8.0",
     "standard": "*"
   },
   "dependencies": {
-    "electron-log": "^2.2.17",
+    "electron-log": "^4.2.4",
     "electron-updater": "^3.1.1",
-    "standard": "^12.0.1"
+    "standard": "^14.3.4"
   },
   "repository": {
     "type": "git",
