@@ -297,19 +297,19 @@ function openSettings (msg, data) {
     var numberOfExclusionDivs = document.getElementById('exclusions').children.length
 
     if (data['excludes'].length >= numberOfExclusionDivs) {
-      for (var i = 0; i < numberOfExclusionDivs; i++) { // fill in existing exclusion divs
+      for (let i = 0; i < numberOfExclusionDivs; i++) { // fill in existing exclusion divs
         document.getElementById('exclude' + i).className = data['excludes'][i].className
         document.getElementById('exclude' + i).value = data['excludes'][i].value
       }
-      for (var i = numberOfExclusionDivs; i < data['excludes'].length; i++) { // add additional exclusion divs as needed
+      for (let i = numberOfExclusionDivs; i < data['excludes'].length; i++) { // add additional exclusion divs as needed
         addExclusion('', data['excludes'][i].value, data['excludes'][i].className)
       }
     } else { // untested: is this even needed? Could be needed if presets open separate settings files. Right now the only time openSettings is called is on page load.
-      for (var i = 0; i < data['excludes'].length; i++) { // fill in existing exclusion divs
+      for (let i = 0; i < data['excludes'].length; i++) { // fill in existing exclusion divs
         document.getElementById('exclude' + i).className = data['excludes'][i].className
         document.getElementById('exclude' + i).value = data['excludes'][i].value
       }
-      for (var i = data['excludes'].length; i <= numberOfExclusionDivs; i++) { // delete exclusion divs that are no longer needed
+      for (let i = data['excludes'].length; i <= numberOfExclusionDivs; i++) { // delete exclusion divs that are no longer needed
         var elem = this.parentNode // DIV container which contains text input, delete button, and error message area
         var id = elem.id
         elem.parentNode.removeChild(elem)
