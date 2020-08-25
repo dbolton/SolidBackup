@@ -404,7 +404,7 @@ function generateDestinationSubFolder (arg, sourceFolder, destinationFolder) {
     }
     console.log('matchingBackups:' + matchingBackups + ' arg.numberOfMirror:' + arg.numberOfMirror)
     if (matchingBackups.length >= arg.numberOfMirror) {
-      var oldestBackup = matchingBackups[0]
+      var oldestBackup = matchingBackups.sort((a, b) => a.localeCompare(b))[0]
 
       fs.renameSync(destinationFolder + '\\' + oldestBackup, destinationFolder + destinationSubFolder)
       /* numberOfBackupsToDelete = matchingBackups.length - arg['numberOfFull'];
