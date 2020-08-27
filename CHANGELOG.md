@@ -16,7 +16,7 @@
 ### 0.5.1
  - You can now start Solid Backup from a path that includes spaces.
  - Always recycle the oldest backup. (Previously this did not work for multiple mirror backups to a drive encrypted by VeraCrypt.)
- - Updated dependences.
+ - Updated dependencies.
  - Continued work toward "Standard JavaScript" code style.
 
 ### 0.5.0
