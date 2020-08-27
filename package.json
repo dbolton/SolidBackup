@@ -38,7 +38,7 @@
     "test": "standard && node my-tests.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "publish": "build -p always"
+    "publish": "electron-builder --publish always"
   },
   "devDependencies": {
     "electron": "^9.2.1",
