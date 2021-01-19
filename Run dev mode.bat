@@ -3,7 +3,7 @@
 
 @echo off
 echo Solid Backup
-echo Copyright (C) 2018  David Bolton
+echo Copyright (C) 2021  David Bolton
 echo.
 echo This program is free software: you can redistribute it and/or modify
 echo it under the terms of the GNU General Public License as published by
